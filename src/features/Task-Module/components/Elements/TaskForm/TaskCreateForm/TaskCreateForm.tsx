@@ -63,7 +63,7 @@ export function TaskCreateForm() {
 
     return (
         <div className="w-fit">
-            <Form form={form} onFinish={onFinish} >
+            <Form form={form} onFinish={onFinish} className=" dark:text-white w-full">
                 <TaskCreateFormContents
                     handleClearForm={handleClearForm}
                     loading={state.loading}

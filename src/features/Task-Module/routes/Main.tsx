@@ -6,6 +6,7 @@ import {fetchTaskUpdates} from "@/features/Task-Module/utils/functions";
 import {TaskCreateForm} from "@/features/Task-Module/components/Elements/TaskForm";
 import TaskUpdateTable from "@/features/Task-Module/components/Elements/TaskUpdateTable";
 import TaskTable from "@/features/Task-Module/components/Elements/TaskTable";
+import { TaskAssignForm } from '../components/Elements/TaskForm/TaskAssignForm';
 
 const TaskCreatePage = () => {
     const task = useTaskContext();
@@ -51,7 +52,7 @@ const TaskCreatePage = () => {
                             ) : (
                                 <>
                                     {state.pageState === 0 && <TaskCreateForm />}
-                                    {/*{state.pageState === 1 && <TaskUpdateForm />}*/}
+                                    {state.pageState === 1 && <TaskAssignForm />}
                                 </>
                             )}
                         </div>

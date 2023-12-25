@@ -1,7 +1,7 @@
 import React from 'react';
 import {HolidayComponent} from "@/components/HolidayComponent/Holiday";
-import {Col, DatePicker, Form, Row} from "antd";
-import {CustomDate, processDateString} from "@/features/Task-Module/utils/format";
+import { DatePicker, Form} from "antd";
+import { processDateString} from "@/features/Task-Module/utils/format";
 import {Button} from "@/features/Task-Module/components/Elements/Button";
 import {InputEdit} from "@/features/Task-Module/components/Elements/InputEdit";
 import {SelectEdit} from "@/features/Task-Module/components/Elements/SelectEdit";
@@ -25,7 +25,7 @@ export const  TaskCreateFormContents= ({handleClearForm,setState,state}: TaskFor
         }
     }
     return (
-          <table className=" mb-1 dark:text-white w-full">
+          <table className="dark:text-white w-full">
            <tbody> 
             <tr className="mb-0">
                 <td className="flex align-middle justify-end mr-1">
@@ -171,7 +171,7 @@ export const  TaskCreateFormContents= ({handleClearForm,setState,state}: TaskFor
                 <td colSpan={4}>
                     <Form.Item
                         name="taskDescription"
-                        className="mb-1"
+                        className="mb-0"
                         rules={[
                             {
                                 required: true,
@@ -182,7 +182,7 @@ export const  TaskCreateFormContents= ({handleClearForm,setState,state}: TaskFor
                         <TextAreaEdit
                             rows={5}
                             cols={40}
-                            className="mt-1 p-1  border rounded-md"
+                            className="mt-1 p-1 w-full border rounded-md"
                         />
                     </Form.Item>
                 </td>

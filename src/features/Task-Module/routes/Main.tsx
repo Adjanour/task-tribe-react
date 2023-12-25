@@ -23,11 +23,25 @@ const TaskCreatePage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            try {
+              const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
+              setState({ ...state, taskUpdates: taskUpdates });
+            } catch (error) {
+              console.error("Error fetching task updates:", error);
+            }
+          };
+      
+          fetchData();
+        }, [state.selectedTaskId]);
+      
+        const refetchData = async () => {
+          try {
             const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
-            setState({...state,taskUpdates:taskUpdates})
-        }
-        fetchData()
-    },[state.selectedTaskId])
+            setState({ ...state, taskUpdates: taskUpdates });
+          } catch (error) {
+            console.error("Error refetching task updates:", error);
+          }
+        };
 
     const handlePageChange = (newPageState:number) => {
         setState({...state,pageState:newPageState})
@@ -67,7 +81,7 @@ const TaskCreatePage = () => {
                             {task.isLoadingGettingTasks ? (
                                 <Skeleton active />
                             ) : (
-                                <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={task.refetchTasks} />
+                                <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={refetchData} />
                             )}
                         </div>
                     </Card>

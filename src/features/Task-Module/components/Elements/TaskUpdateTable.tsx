@@ -156,10 +156,10 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,refetchDat
                 pagination={{ pageSize: pageSize }}
                 scroll={{ x: '1300',y:yScroll }} />
             <TaskDetailsModal key={5}
-                              isVisible={isModalVisible}
-                              taskId={selectedTaskId}
-                              onClose={handleModalCancel}
-                              refetchData={refetchData}
+                    isVisible={isModalVisible}
+                    taskId={selectedTaskId}
+                    onClose={handleModalCancel}
+                    refetchData={refetchData}
             />
         </>
     )

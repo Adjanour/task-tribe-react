@@ -1,6 +1,7 @@
 import {useRouteError, useRoutes} from 'react-router-dom';
 
 import { protectedRoutes } from './protected';
+import Home from './Home';
 
 export default function ErrorPage() {
   const error : any = useRouteError();
@@ -19,7 +20,7 @@ export default function ErrorPage() {
 
 export const AppRoutes = () => {
 
-  const commonRoutes = [{ path: '/',errorElement: <ErrorPage />, element: <h1>Home</h1> }];
+  const commonRoutes = [{ path: '/',errorElement: <ErrorPage />, element: <Home/> }];
 
   const element = useRoutes([...protectedRoutes, ...commonRoutes]);
 

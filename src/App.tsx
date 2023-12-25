@@ -4,10 +4,11 @@ import { App as Antd } from 'antd';
 
 function App() {
   return (
-
-    <AppProvider>
-      <AppRoutes />
-    </AppProvider>
+    <Antd>
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
+    </Antd>
   );
 }
 

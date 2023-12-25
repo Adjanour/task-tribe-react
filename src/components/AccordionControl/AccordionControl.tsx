@@ -1,7 +1,7 @@
 import React, { ReactEventHandler, useState } from 'react';
 import { AccordionItems } from './AccordionItems';
-import { Link } from 'react-router-dom';
-
+import {Link, NavLink} from 'react-router-dom';
+import cn from 'clsx'
 export type AccordionItemType = {
     title: string;
     icon?: React.ReactNode;
@@ -31,7 +31,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
     <>
     <div>
       {children ? (
-        <button className="accordion-item" onClick={toggleAccordion} aria-expanded={isOpen}>
+        <button className={cn("accordion-item",isOpen ? 'active':"",isOpen ? "bg-blue-300 font-bold rounded-md":"")} onClick={toggleAccordion} aria-expanded={isOpen}>
         <div className='title-theme' style={{display:'flex',flexDirection:'row'}}>
         <div className="icon">{icon}</div>
         <div className="text-md" style={{marginLeft:'5px'}}>{title}</div>
@@ -53,8 +53,8 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
           </div>
       </button>
       ):(
-        <Link to={path ? path : ''}>
-      <button className="accordion-item" onClick={toggleAccordion} aria-expanded={isOpen}>
+        <NavLink to={path ? path : ''} >
+      <button className={cn("accordion-item",isOpen ? 'active':"")} onClick={toggleAccordion} aria-expanded={isOpen}>
         <div className='title-theme' style={{display:'flex',flexDirection:'row'}}>
         <div className="icon">{icon}</div>
         <div className="text-md" style={{marginLeft:'5px'}}>{title}</div>
@@ -75,7 +75,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
             )}
           </div>
       </button>
-      </Link>
+      </NavLink>
       )}
     </div>
       {isOpen && (
@@ -92,14 +92,14 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
 }
 function AccordionChild({ child }:AccordionChildProps) {
   return (
-    <Link to={child.path ? child.path : ''} key={child.title}>
+    <NavLink to={child.path ? child.path : ''} key={child.title}>
       <div className="accordion-child">
         {child.icon && <div className="icon">{child.icon}</div>}
         <p className="text-md" style={{ marginLeft: '5px' }}>
           {child.title}
         </p>
       </div>
-    </Link>
+    </NavLink>
   );
 }
 export function AccordionWithSearch() {

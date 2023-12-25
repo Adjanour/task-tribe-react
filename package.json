@@ -3,20 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@heroicons/react": "^1.0.6",
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^5.14",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.68",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "antd": "^5.12.1",
+    "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
+    "prettier": "^3.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.12",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
@@ -24,10 +29,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "build:style": "tailwind build src/index.css -o src/tailwind.css",
     "start": "craco start",
     "build": "craco build",
-    "test":  "craco test",
-    "eject": "craco eject"
+    "test": "craco test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +55,8 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
+    "@types/axios": "^0.14.0",
+    "autoprefixer": "^9.8.8",
     "tailwindcss": "^3.4.0"
   }
 }

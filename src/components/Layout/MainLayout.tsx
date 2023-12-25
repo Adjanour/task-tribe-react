@@ -7,9 +7,25 @@ type MainLayoutProps ={
 
 export const MainLayout = ({children}:MainLayoutProps) => {
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div>
         <AccordionWithSearch/>
         <main className='layout'>{children}</main>
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

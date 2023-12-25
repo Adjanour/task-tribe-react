@@ -2,6 +2,8 @@ import React from 'react';
 import { Spinner } from '@/components/Elements';
 import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { queryClient } from '@/lib/react-query';
+import { QueryClientProvider } from 'react-query';
 
 const ErrorFallback = () => {
   return (
@@ -31,7 +33,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <QueryClientProvider client={queryClient}>
             <Router>{children}</Router>
+        </QueryClientProvider>
       </ErrorBoundary>
     </React.Suspense>
   );

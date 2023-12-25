@@ -27,19 +27,21 @@ export const AccordionItems = [
         children: [
             {
                 title:'All Tasks',
-                path: '/task/all',
+                path: 'task/all',
             },
             {
                 title:'My Tasks',
-                path: '/task/my',
+                path: 'task/my',
+                icon: <UserGroupIcon />,
             },
             {
                 title:'Assigned Tasks',
-                path: '/task/assigned',
+                path: 'task/assigned',
+                icon: <ClipboardListIcon />,
             },
             {
                 title:'Dashboard',
-                path: '/task/dashboard',
+                path: 'task/dashboard',
                 icon: <ChartSquareBarIcon />,
             }
 

@@ -3,7 +3,9 @@ import {Navigate, Outlet, useRouteError} from 'react-router-dom';
 
 import { Spinner } from '@/components/Elements';
 import { MainLayout } from '@/components/Layout';
+import {lazyImport} from "@/utils/lazyImports";
 
+const {TaskRoutes} = lazyImport(() => import('@/features/Task-Module'), 'TaskRoutes');
 
 export default function ErrorPage() {
     const error : any = useRouteError();
@@ -42,7 +44,7 @@ export const protectedRoutes = [
       element: <App />,
       errorElement: <ErrorPage/>,
       children: [
-        { path: 'task', element: <h1>Discussions</h1> },
+        { path: 'task/*', element: <TaskRoutes/> },
         { path: 'users', element: <h1>Users</h1> },
         { path: 'profile', element: <h1>Profile</h1> }
     ],

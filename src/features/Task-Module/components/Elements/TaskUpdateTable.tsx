@@ -48,15 +48,12 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,refetchDat
     };
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
     const rowSelection: TableRowSelection<TaskUpdate> = {
         selectedRowKeys,
         onChange: onSelectChange,
 
-        // onSelect: (record:Task)=>{handleTaskClick(record.taskId.toString())},
     };
     const columns: ColumnsType<TaskUpdate> = [
 
@@ -67,16 +64,6 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,refetchDat
             width: 120,
             align: 'left',
         },
-        // {
-        //     title: 'Status',
-        //     dataIndex: 'taskStatus',
-        //     render: (text) => (
-        //         <Badge status={text === 'Not Started' ? 'warning' : 'success'} text={text} />
-        //     ),
-        //     width: 100,
-        //     fixed:'left',
-        //     align: 'left',
-        // },
         {
             title: 'Progress',
             dataIndex: 'tkuProgress',

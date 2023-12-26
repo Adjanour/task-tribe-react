@@ -27,16 +27,14 @@ interface TaskTableProps {
     tasks: Task[];
     yScroll:number;
     pageSize:number;
-    state:any;
     setState:any;
 }
 
-const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState,state }) => {
+const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }) => {
 
     const handleTaskClick = (taskId: string) => {
-        setState({...state,selectedTaskId:taskId});
-    };
-
+        setState((prevState: any) => ({ ...prevState, selectedTaskId: taskId }));
+      };
 
 
     const columns: ColumnsType<Task> = [
@@ -77,14 +75,20 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState,s
             dataIndex: 'taskProgress',
             width: 150,
             align: 'left',
-            fixed:'left',
+            fixed: 'left',
             defaultSortOrder: 'descend',
-            sorter: (a, b) => +a.taskProgress - +b.taskProgress,
-            key: 'taskProgress',
+            sorter: (a, b) => parseFloat(a.taskProgress) - parseFloat(b.taskProgress),
             render: (progress) => (
-                <Progress percent={progress} style={{width:'75%'}} size={[150,25]} format={() => `${progress}%`} showInfo status={getStatus(progress)} />
+              <Progress
+                percent={parseFloat(progress)}
+                style={{ width: '75%' }}
+                size={[150, 25]}
+                format={() => `${parseFloat(progress)}%`}
+                showInfo
+                status={getStatus(progress)}
+              />
             ),
-        },
+          },
 
         {
             title: 'Assigned To',
@@ -127,15 +131,15 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState,s
         },
 
     ];
-    const getStatus = (progress:string) => {
-        if (+progress === 100) {
-            return 'success';
-        } else if (+progress > 70) {
-            return 'active';
+    const getStatus = (progress: string) => {
+        if (parseFloat(progress) === 100) {
+          return 'success';
+        } else if (parseFloat(progress) > 70) {
+          return 'active';
         } else {
-            return 'exception';
+          return 'exception';
         }
-    };
+      };
     const formatDate = (date: string) => {
         const newDate = new Date(date);
         return newDate.toLocaleDateString('en-GB', {

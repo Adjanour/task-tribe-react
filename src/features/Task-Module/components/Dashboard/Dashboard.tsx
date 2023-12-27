@@ -39,28 +39,28 @@ export const Dashboard = () => {
 
     ];
 
-    const taskTableData = task.Tasks?.slice(-5); // Displaying only the first 5 tasks
+    const taskTableData = task.Tasks?.slice(-20); // Displaying only the first 5 tasks
 
     return (
         <div>
             {/* Task Overview Section */}
             <Row gutter={20}>
-                <Col span={6}>
+                <Col span={5}>
                     <Card>
                         <Statistic prefix={<CheckCircleOutlined style={{ fontSize: 28, color: '#201b1b' }} />} title="Total Tasks" value={totalTasks} />
                     </Card>
                 </Col>
-                <Col span={6}>
+                <Col span={5}>
                     <Card>
                         <Statistic title="Completed Tasks" valueStyle={{color:'green'}} prefix={<RiseOutlined />} value={completedTasks} />
                     </Card>
                 </Col>
-                <Col span={6}>
+                <Col span={5}>
                     <Card>
                         <Statistic prefix={<LoadingOutlined style={{ fontSize: 24, color: 'yellow' }} />} title="Pending Tasks" value={pendingTasks} />
                     </Card>
                 </Col>
-                <Col span={6}>
+                <Col span={5}>
                     <Card>
                         <Statistic title="Not Started" valueStyle={{color:'red'}} prefix={<FallOutlined />} value={notStartedTasks}/>
                     </Card>

@@ -24,7 +24,7 @@ export const HolidayComponent =  ({startDate,endDate}:{startDate:string,endDate:
             </div>
         }
         >
-            <a> <p className="mt-1 text-blue-300">There {holidays.length===1?'is':'are'} {holidays.length} {holidays.length===1?'Holiday':'Holidays'}</p></a>
+         <p className="mt-1 text-blue-300">There {holidays.length===1?'is':'are'} {holidays.length} {holidays.length===1?'Holiday':'Holidays'}</p>
         </Popover>
     );
 }

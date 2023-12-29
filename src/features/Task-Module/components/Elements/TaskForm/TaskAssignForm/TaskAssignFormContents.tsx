@@ -213,7 +213,7 @@ export const  TaskAssignFormContents = ({handleClearForm,setState,state}:TaskAss
                 <td></td>
                 <td>
                     <div className="flex mr-2 mt-2 grid-cols-3 gap-4 float-right">
-                        <Button text="Assign" loading={state.loading} />
+                        <Button text="Assign" htmlType="submit" loading={state.loading} />
                         <Button text="New" onClick={handleClearForm} />
                     </div>
                 </td>

@@ -95,7 +95,7 @@ const TaskCreatePage = () => {
                         {task.isLoadingGettingTasks ? (
                             <Skeleton active />
                         ) : (
-                            <TaskTable state={state} setState={setState} pageSize={5} tasks={task.Tasks} yScroll={260} />
+                            <TaskTable setState={setState} pageSize={5} tasks={task.Tasks} yScroll={260} />
                         )}
 
                     </Card>

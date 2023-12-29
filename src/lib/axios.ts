@@ -1,4 +1,5 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios';
+import { notification } from 'antd';
 
 import { API_URL } from '@/config';
 import storage from '@/utils/storage';
@@ -17,12 +18,17 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(authRequestInterceptor);
-axios.interceptors.response.use(
-    (response) => {
-        return response.data;
-    },
-    (error) => {
-        const message = error.response?.data?.message || error.message;
-        return Promise.reject(error);
-    }
-);
+// axios.interceptors.response.use(
+//     (response) => {
+//         return response.data;
+//     },
+//     (error) => {
+//         const message = error.response?.data?.message || error.message;
+//         notification.warning({
+//             message: ` Error ${error.response?.status}}`,
+//             description: message,
+//             placement: 'topLeft',
+//           });
+//         return Promise.reject(error);
+//     }
+// );

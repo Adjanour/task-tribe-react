@@ -1,8 +1,8 @@
 import {  Route, Routes } from 'react-router-dom';
-import Main from "@/features/Task-Module/routes/Main";
 import {TaskProvider} from "@/features/Task-Module/stores/TaskContext";
 import TaskCreatePage from "@/features/Task-Module/routes/Main";
 import {Dashboard} from "@/features/Task-Module/components/Dashboard";
+import KanbanBoard from '../components/Kanban/KanbanBoard';
 
 export const TaskRoutes = () => {
     return (
@@ -10,6 +10,7 @@ export const TaskRoutes = () => {
             <Routes>
                 <Route path="" element={<TaskCreatePage />} />
                 <Route path="dashboard" element={<Dashboard />} />
+                <Route path="/kanban" element={<KanbanBoard/>} />
             </Routes>
         </TaskProvider>
 );

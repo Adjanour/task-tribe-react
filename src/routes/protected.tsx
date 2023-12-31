@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
-import {Navigate, Outlet, useRouteError} from 'react-router-dom';
+import { Outlet, useRouteError} from 'react-router-dom';
 
 import { Spinner } from '@/components/Elements';
 import { MainLayout } from '@/components/Layout';
 import {lazyImport} from "@/utils/lazyImports";
 
 const {TaskRoutes} = lazyImport(() => import('@/features/Task-Module'), 'TaskRoutes');
-
+const {TeamRoutes} = lazyImport(() => import('@/features/Team-Module'), 'TeamRoutes');
 export default function ErrorPage() {
     const error : any = useRouteError();
     console.error(error);
@@ -45,7 +45,7 @@ export const protectedRoutes = [
       errorElement: <ErrorPage/>,
       children: [
         { path: 'task/*', element: <TaskRoutes/> },
-        { path: 'teams/*', element: <h1>Users</h1> },
+        { path: 'teams/*', element: <TeamRoutes/> },
         { path: 'settings/*', element: <h1>Profile</h1> },
         { path: 'projects/*', element: <h1>Profile</h1> },
         { path: 'education/*', element: <h1>Profile</h1> }

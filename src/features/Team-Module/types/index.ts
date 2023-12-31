@@ -85,7 +85,7 @@ export type CustomDate = {
 }
 
 export type  TaskPutData ={
-    taskUpdateTaskId:SelectComponentData|number;
+    taskUpdateTaskId:SelectComponentData;
     taskUpdateTitle:string;
     taskUpdateDescription:string;
     taskUpdateUser:number;

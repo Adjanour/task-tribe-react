@@ -124,40 +124,26 @@ export const useTaskAPI = () => {
         }
     };
 
-    const addTaskUpdate = async (newUpdate: TaskPutData) => {
-        const {
+    const addTaskUpdate = async (newUpdate:TaskPutData) => {
+        const{
             taskUpdateTaskId,
             taskUpdateTitle,
             taskUpdateChallenge,
             taskUpdateDescription,
-            // taskUpdateUser,
+            taskUpdateUser,
             taskUpdateProgress
-        } = newUpdate;
-    
-        // Validate taskUpdateTaskId
-        if (!taskUpdateTaskId) {
-            throw new Error('taskUpdateTaskId is required.');
-        }
-    
-        // Convert taskUpdateTaskId to a number
-        const taskId = typeof taskUpdateTaskId === 'object' ? taskUpdateTaskId.value : +taskUpdateTaskId;
-    
-        // Create the data object
+        } = newUpdate
         const data = {
-            taskUpdateTaskId: taskId,
+            taskUpdateTaskId: typeof taskUpdateTaskId === 'object' ? taskUpdateTaskId.value : taskUpdateTaskId,
             taskUpdateChallenge,
             taskUpdateTitle,
             taskUpdateProgress,
             taskUpdateDescription,
-            taskUpdateUser: 1 // Assuming a default value
-        };
-    
-        // Call the API to post the task update
+            taskUpdateUser:1
+        }
         const response = await postTaskUpdate(data);
-        
         return response;
-    };
-    
+    }
 
     const {data:Tasks, refetchData: refetchTasks, isLoading:isLoadingGettingTasks, error:errorFetchingTasks} = useGetData({
             dataAlias: "task",

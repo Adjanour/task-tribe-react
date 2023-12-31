@@ -102,7 +102,6 @@ export  function TaskUpdateForm({
     } finally {
       refetchData();
       setState((prevState) => ({ ...prevState, loading: false }));
-      form.resetFields();
     }
   };
 

@@ -45,8 +45,10 @@ export const protectedRoutes = [
       errorElement: <ErrorPage/>,
       children: [
         { path: 'task/*', element: <TaskRoutes/> },
-        { path: 'users', element: <h1>Users</h1> },
-        { path: 'profile', element: <h1>Profile</h1> }
+        { path: 'teams/*', element: <h1>Users</h1> },
+        { path: 'settings/*', element: <h1>Profile</h1> },
+        { path: 'projects/*', element: <h1>Profile</h1> },
+        { path: 'education/*', element: <h1>Profile</h1> }
     ],
   },
 ];

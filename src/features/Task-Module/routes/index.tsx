@@ -8,7 +8,7 @@ export const TaskRoutes = () => {
     return (
         <TaskProvider>
             <Routes>
-                <Route path="" element={<TaskCreatePage />} />
+                <Route path="assigned" element={<TaskCreatePage />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="/kanban" element={<KanbanBoard/>} />
             </Routes>

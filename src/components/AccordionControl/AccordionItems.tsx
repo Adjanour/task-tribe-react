@@ -24,6 +24,7 @@ export const AccordionItems = [
     {
         title:'Task',
         icon: <ClipboardListIcon />,
+        path:"task",
         children: [
             {
                 title:'All Tasks',
@@ -54,15 +55,15 @@ export const AccordionItems = [
         children: [
             {
                 title:'All Projects',
-                path: '/projects/all',
+                path: 'projects/all',
             },
             {
                 title:'My Projects',
-                path: '/projects/my',
+                path: 'projects/my',
             },
             {
                 title:'Assigned Projects',
-                path: '/projects/assigned',
+                path: 'projects/assigned',
             }
         ]
     },
@@ -72,67 +73,67 @@ export const AccordionItems = [
         children: [
             {
                 title:'All Teams',
-                path: '/teams/all'
+                path: 'teams/all'
             },
             {
                 title:'My Teams',
-                path: '/teams/my',
+                path: 'teams/my',
                 
             },
             {
                 title:'Assigned Teams',
-                path: '/teams/assigned',
+                path: 'teams/assigned',
             }
         ]
     },
     {
         title:'Settings',
         icon: <CogIcon />,
-        path: '/settings',
+        path: 'settings/',
         children: [
             {
                 title:'Profile',
-                path: '/settings/profile',
+                path: 'settings/profile',
                 icon: <IdentificationIcon />,
             },
             {
                 title:'Account',
-                path: '/settings/account',
+                path: 'settings/account',
             },
             {
                 title:'Notifications',
-                path: '/settings/notifications',
+                path: 'settings/notifications',
             }
         ]
     },
     {
         title: 'Education',
         icon: <AcademicCapIcon />,
-        path: '/education',
+        path: 'education',
         // ... (additional education-related items)
       },
       {
         title: 'Announcements',
         icon: <SpeakerphoneIcon />,
-        path: '/announcements',
+        path: 'announcements',
         // ... (additional announcement-related items)
       },
       {
         title: 'Library',
         icon: <BookOpenIcon />,
-        path: '/library',
+        path: 'library',
         // ... (additional library-related items)
       },
       {
         title: 'Explore',
         icon: <GlobeAltIcon />,
-        path: '/explore',
+        path: 'explore',
         // ... (additional explore-related items)
       },
       {
         title: 'Technology',
         icon: <LightningBoltIcon />,
-        path: '/technology',
+        path: 'technology',
         // ... (additional technology-related items)
       }
 

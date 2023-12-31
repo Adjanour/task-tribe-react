@@ -1,6 +1,6 @@
 import React, { ReactEventHandler, useState } from 'react';
 import { AccordionItems } from './AccordionItems';
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import cn from 'clsx'
 export type AccordionItemType = {
     title: string;
@@ -20,6 +20,14 @@ type AccordionChildProps = {
     child: AccordionItemType;
 }
 
+const navigationActive = (({isActive}:{isActive:boolean})=> {
+  return{
+    color: isActive ?"blue" : "black",
+    textDecoration : "none",
+    backgroundColor: isActive ? "grey" : "",
+    fontSize:"medium"
+  }
+})
 function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +61,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
           </div>
       </button>
       ):(
-        <NavLink to={path ? path : ''} >
+        <NavLink to={path ? path : ''} style={navigationActive} >
       <button className={cn("accordion-item",isOpen ? 'active':"")} onClick={toggleAccordion} aria-expanded={isOpen}>
         <div className='title-theme' style={{display:'flex',flexDirection:'row'}}>
         <div className="icon">{icon}</div>
@@ -92,7 +100,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
 }
 function AccordionChild({ child }:AccordionChildProps) {
   return (
-    <NavLink to={child.path ? child.path : ''} key={child.title}>
+    <NavLink to={child.path ? child.path : ''} key={child.title} style={navigationActive}>
       <div className="accordion-child">
         {child.icon && <div className="icon">{child.icon}</div>}
         <p className="text-md" style={{ marginLeft: '5px' }}>

@@ -39,7 +39,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
     <>
     <div>
       {children ? (
-        <button className={cn("accordion-item",isOpen ? 'active':"",isOpen ? "bg-blue-300 font-bold rounded-md":"")} onClick={toggleAccordion} aria-expanded={isOpen}>
+        <div className={cn("accordion-item",isOpen ? 'active':"",isOpen ? "bg-blue-300 font-bold rounded-md":"")} onClick={toggleAccordion} aria-expanded={isOpen}>
         <div className='title-theme' style={{display:'flex',flexDirection:'row'}}>
         <div className="icon">{icon}</div>
         <div className="text-md" style={{marginLeft:'5px'}}>{title}</div>
@@ -59,7 +59,7 @@ function AccordionItem({ icon, title, children, path, searchTerm }:AccordionItem
               </button>
             )}
           </div>
-      </button>
+      </div>
       ):(
         <NavLink to={path ? path : ''} style={navigationActive} >
       <button className={cn("accordion-item",isOpen ? 'active':"")} onClick={toggleAccordion} aria-expanded={isOpen}>

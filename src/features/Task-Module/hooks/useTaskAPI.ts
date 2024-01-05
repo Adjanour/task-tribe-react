@@ -53,6 +53,7 @@ export const useTaskAPI = () => {
 
             // Assign the task to the assignees
             const { assignedTo, assignedBy } = newTask;
+            console.log(assignedTo);
             if (assignedTo) {
                 for (const assignee of assignedTo) {
                     const response = await assignTask(taskId, assignee, assignedBy);

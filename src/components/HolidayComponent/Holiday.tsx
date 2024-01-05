@@ -6,7 +6,7 @@ export const HolidayComponent =  ({startDate,endDate}:{startDate:string,endDate:
     return (
         <Popover
         content={
-            <div className="p-1 rounded-md  bg-white justify-center  w-fit m-auto">
+            <div className="p-1 rounded-md  bg-white justify-center  w-fit ">
                 <table className="table">
                     <thead className="">
                     <th className="text-sm ml-1">Holiday</th>

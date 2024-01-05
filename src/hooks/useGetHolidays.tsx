@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
+import { notification } from 'antd';
 
 export type Holiday = {
     name: string; // The name of the holiday.
@@ -19,7 +20,7 @@ export type Holiday = {
 export const fetchHolidays = async (startDate: string, endDate: string): Promise<Holiday[]> => {
     try {
         // Make API request to get holiday data
-        const response = await Axios.get(`https://holidayapi.com/v1/holidays?pretty&key=7e488581-b5cf-4f4a-8332-0aba5f353c31&country=GH&year=2022&month=${startDate ? startDate.split('-')[1] : '12'}`);
+        const response = await Axios.get(`https://holidayapi.com/v1/holidays?pretty&key=7e488581-b5cf-4f4a-8332-0aba5f353c31&country=GH&year=2023&month=${startDate ? startDate.split('-')[1] : '12'}`);
         const holidayData = response.data;
 
         // Transform holiday data into desired format
@@ -46,20 +47,29 @@ export const fetchHolidays = async (startDate: string, endDate: string): Promise
 export const useGetHolidays = (start: string, end: string) => {
     const [holidays, setHolidays] = useState<Holiday[]>([]);
 
-    /**
-     * Fetches holiday data from the server and updates the holidays state.
-     */
-    const fetchHolidayData = async () => {
-        const holidayData = await fetchHolidays(start, end);
-        setHolidays(holidayData);
-    };
 
     useEffect(() => {
+        /**
+         * Fetches holiday data from the server and updates the holidays state.
+         */
+        const fetchHolidayData = async () => {
+            try {
+                const holidayData = await fetchHolidays(start, end);
+                setHolidays(holidayData);
+            } catch (error) {
+                notification.error({message:`${error}`})
+            }
+        };
         if (start && end) {
-            fetchHolidayData();
+            try {
+                fetchHolidayData();
+            } catch (error) {
+                notification.error({message:"There was an error getting Holidays"})
+            }
+            
         }
     }, [start, end]);
-
+    
     return holidays.filter(
         (holiday) =>
             holiday.date.split("-")[2] >= start.split("-")[2] &&

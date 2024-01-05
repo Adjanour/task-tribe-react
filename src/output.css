@@ -664,6 +664,10 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-2\.5 {
+  margin-bottom: 0.625rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -704,8 +708,12 @@ video {
   margin-top: 1rem;
 }
 
-.mb-2\.5 {
-  margin-bottom: 0.625rem;
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
+.ml-\[25px\] {
+  margin-left: 25px;
 }
 
 .block {
@@ -850,10 +858,6 @@ video {
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-1 {
-  gap: 0.25rem;
 }
 
 .rounded-full {

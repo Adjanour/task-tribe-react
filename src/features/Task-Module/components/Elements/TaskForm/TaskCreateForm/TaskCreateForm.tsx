@@ -3,7 +3,7 @@ import {Form, message} from "antd";
 import {useTaskAPI} from "@/features/Task-Module/hooks/useTaskAPI";
 import {useTaskContext} from "@/features/Task-Module/stores/TaskContext";
 import TaskCreateFormContents
-    from "@/features/Task-Module/components/Elements/TaskForm/TaskCreateForm/TaskCreateFormContents";
+    from "@/features/Task-Module/components/Elements/TaskForm/TaskCreateForm/Test";
 
 /**
  * Component for creating a task form.
@@ -62,8 +62,8 @@ export function TaskCreateForm() {
     }
 
     return (
-        <div className="w-fit">
-            <Form form={form} onFinish={onFinish} className=" dark:text-white w-full">
+        <div className="w-full">
+            <Form form={form} onFinish={onFinish} className=" dark:text-white w-full" requiredMark={false}>
                 <TaskCreateFormContents
                     handleClearForm={handleClearForm}
                     loading={state.loading}

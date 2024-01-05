@@ -26,7 +26,9 @@ export function processDateString(dateString: CustomDate|any) {
     // Extract year, month, and day from the CustomDate object
     const year = dateString.$y;
     const month = dateString.$M + 1;
-    const day = dateString.$D;
+    const day = dateString.$d.toISOString().split('T')[0].split('-')[2];
+    console.log(dateString);
+    console.log(dateString.$d.toISOString().split('T')[0].split('-')[2]);
 
     // Format the extracted values as a string in the format "YYYY-MM-DD"
     const formattedDateString = `${year}-${month}-${day}`;

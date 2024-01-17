@@ -92,6 +92,7 @@ export type  TaskPutData ={
     taskUpdateChallenge:string;
     taskUpdateProgress:number;
     taskUpdateDetails:string;
+    taskUpdateTaskAssignmentId:SelectComponentData|number;
 }
 export type TaskUpdate = {
     taskUpdateId: number;

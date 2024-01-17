@@ -65,7 +65,7 @@ export const useTaskAPI = () => {
         }
     };
     const { postData:postTaskUpdate,postError:TaskUpdateError } = usePostData({
-        endpoint: 'http://localhost:8000/api/user/task-updates/',
+        endpoint: 'http://localhost:8000/api/v1/task-updates/',
         token: Token
     });
     const { postData, isPosting, postError, } = usePostData({
@@ -127,7 +127,7 @@ export const useTaskAPI = () => {
 
     const addTaskUpdate = async (newUpdate: TaskPutData) => {
         const {
-            taskUpdateTaskId,
+            taskUpdateTaskAssignmentId,
             taskUpdateTitle,
             taskUpdateChallenge,
             taskUpdateDetails,
@@ -136,16 +136,16 @@ export const useTaskAPI = () => {
         } = newUpdate;
     
         // Validate taskUpdateTaskId
-        if (!taskUpdateTaskId) {
+        if (!taskUpdateTaskAssignmentId) {
             throw new Error('taskUpdateTaskId is required.');
         }
     
         // Convert taskUpdateTaskId to a number
-        const taskId = typeof taskUpdateTaskId === 'object' ? taskUpdateTaskId.value : +taskUpdateTaskId;
+        const taskAssignmentId = typeof taskUpdateTaskAssignmentId === 'object' ? taskUpdateTaskAssignmentId.value : +taskUpdateTaskAssignmentId;
     
         // Create the data object
         const data = {
-            taskUpdateTaskAssignmentId: taskId,
+            taskUpdateTaskAssignmentId: taskAssignmentId,
             taskUpdateChallenge,
             taskUpdateTitle,
             taskUpdateProgress,

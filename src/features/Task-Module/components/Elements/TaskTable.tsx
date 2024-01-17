@@ -166,7 +166,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
                 className="mb-0"
                 size='middle'
                 dataSource={tasks}
-                rowKey={(record) => record.taskId}
+                rowKey={(record) => record.taskAssignmentId}
                 columns={columns}
                 bordered
                 pagination={{ pageSize: pageSize }}

@@ -61,7 +61,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                     </label>
                 </td>
                 <td>
-                    <Form.Item  name="taskUpdateTaskId" rules={[{ required: true, message: 'Please select a task' }]} className='mb-1'>
+                    <Form.Item  name="taskUpdateTaskAssignmentId" rules={[{ required: true, message: 'Please select a task' }]} className='mb-1'>
                         <SelectEdit mode="single" fetchOptions={fetchTasks} placeholder="Select task "/>
                     </Form.Item>
                 </td>
@@ -94,7 +94,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                 </label>
             </td>
                 <td colSpan={3}>
-                    <Form.Item className="mb-1"  name="taskUpdateDescription" rules={[{ required: true, message: 'Please enter task update details' }]}>
+                    <Form.Item className="mb-1"  name="taskUpdateDetails" rules={[{ required: true, message: 'Please enter task update details' }]}>
                         <TextAreaEdit rows={4} cols={60}  placeholder="Enter task update details" />
                     </Form.Item>
                 </td>

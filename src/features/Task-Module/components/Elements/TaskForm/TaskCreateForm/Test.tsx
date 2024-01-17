@@ -72,7 +72,7 @@ export const TaskCreateFormContents = ({
       </Row>
       <Row>
         <Col span={14} offset={7}>
-            <div className="">
+            <div className="" style={{marginBottom:"10px",marginTop:"0px"}}>
             <HolidayComponent
               startDate={state.startDate}
               endDate={state.endDate}

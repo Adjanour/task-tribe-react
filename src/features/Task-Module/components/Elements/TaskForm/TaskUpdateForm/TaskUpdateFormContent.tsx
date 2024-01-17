@@ -142,7 +142,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
             </td>
                 <td colSpan={3}>
                     <Form.Item className="mb-1"  name="taskUpdateChallenge">
-                        <TextAreaEdit rows={4} cols={60} maxLength={6}   placeholder="Describe your progress and any challenges" />
+                        <TextAreaEdit rows={4} cols={60}    placeholder="Describe your progress and any challenges" />
                     </Form.Item>
                 </td>
             </tr>

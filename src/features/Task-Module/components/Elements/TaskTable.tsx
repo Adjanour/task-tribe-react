@@ -22,6 +22,7 @@ export type Task = {
     taskDuration: number;
     taskProgress: string;
     taskSlug: string | null;
+    taskAssignmentId:number;
 }
 interface TaskTableProps {
     tasks: Task[];
@@ -92,14 +93,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
 
         {
             title: 'Assigned To',
-            dataIndex: 'fullName',
+            dataIndex: 'taskAssigneeName',
             width: 200,
             fixed:'left',
             align: 'left',
         },
         {
             title: 'Assigned By',
-            dataIndex: 'AssignerFullName',
+            dataIndex: 'taskAssignerName',
             width: 200,
             fixed:'left',
             align: 'left',
@@ -141,7 +142,9 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
         }
       };
     const formatDate = (date: string) => {
+        console.log(date)
         const newDate = new Date(date);
+        console.log(newDate)
         return newDate.toLocaleDateString('en-GB', {
             weekday: 'short',
             day: 'numeric',
@@ -156,7 +159,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
                 onRow={(record) => {
                     return {
                         onDoubleClick: () => {
-                            handleTaskClick(record.taskId.toString());
+                            handleTaskClick(record.taskAssignmentId.toString());
                         }
                     };
                 }}

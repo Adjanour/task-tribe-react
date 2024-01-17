@@ -20,7 +20,7 @@ export default function ErrorPage() {
 
 export const AppRoutes = () => {
 
-  const commonRoutes = [{ path: '/',errorElement: <ErrorPage />, element: <Home/> }];
+  const commonRoutes = [{ path: '/', element: <Home/> }];
 
   const element = useRoutes([...protectedRoutes, ...commonRoutes]);
 

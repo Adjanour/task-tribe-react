@@ -33,8 +33,8 @@ const formatDate = (date: string): string => {
 };
 
 const TaskTableRow = ({ record, onClick }: { record: TaskUpdate; onClick: () => void }) => (
-  <Tooltip className="bg-white-500 text-black dark:text-white dark:bg-black" title={record.tkuDescription}>
-    <span onClick={onClick}>{record.tkuDescription}</span>
+  <Tooltip className="bg-white-500 text-black dark:text-white dark:bg-black" title={record.taskUpdateDetails}>
+    <span onClick={onClick}>{record.taskUpdateDetails}</span>
   </Tooltip>
 );
 
@@ -101,7 +101,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
       width: 200,
       ellipsis: true,
       render: (text, record) => (
-        <TaskTableRow record={record} onClick={() => handleTaskClick(record.taskUpdateTaskId_id.toString())} />
+        <TaskTableRow record={record} onClick={() => handleTaskClick(record.taskUpdateId.toString())} />
       ),
     },
   ];
@@ -111,9 +111,9 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
       <Table<TaskUpdate>
         onRow={(record) => {
           return {
-            onClick: () => handleTaskClick(record.taskUpdateTaskId_id.toString()),
+            onClick: () => handleTaskClick(record.taskUpdateId.toString()),
             onChange: () => {
-              setSelectedRowKeys([record.taskUpdateTaskId_id.toString()]);
+              setSelectedRowKeys([record.taskUpdateId.toString()]);
             },
           };
         }}

@@ -12,7 +12,7 @@ import { TaskUpdateForm } from '../components/Elements/TaskForm/TaskUpdateForm';
 const TaskCreatePage = () => {
     const task = useTaskContext();
     const [state,setState] = useState({
-        selectedTaskId: "0",
+        selectedTaskId: "1",
         statusData: { label: "", value: "" },
         taskData: { label: "", value: "" },
         startDate: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),

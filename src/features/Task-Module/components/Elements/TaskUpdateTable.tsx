@@ -23,7 +23,7 @@ const getStatus = (progress: number) => {
 };
 
 const formatDate = (date: string): string => {
-  const newDate = new Date(date.split('T')[0]);
+  const newDate = new Date(date);
   return newDate.toLocaleDateString('en-GB', {
     weekday: 'short',
     day: 'numeric',
@@ -33,8 +33,8 @@ const formatDate = (date: string): string => {
 };
 
 const TaskTableRow = ({ record, onClick }: { record: TaskUpdate; onClick: () => void }) => (
-  <Tooltip className="bg-white-500 text-black dark:text-white dark:bg-black" title={record.tkuDescription}>
-    <span onClick={onClick}>{record.tkuDescription}</span>
+  <Tooltip className="bg-white-500 text-black dark:text-white dark:bg-black" title={record.taskUpdateDetails}>
+    <span onClick={onClick}>{record.taskUpdateDetails}</span>
   </Tooltip>
 );
 
@@ -65,14 +65,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
   const columns: ColumnsType<TaskUpdate> = [
     {
       title: 'Title',
-      dataIndex: 'tkuTitle',
+      dataIndex: 'taskUpdateTitle',
       fixed: 'left',
       width: 120,
       align: 'left',
     },
     {
       title: 'Progress',
-      dataIndex: 'tkuProgress',
+      dataIndex: 'taskUpdateProgress',
       width: 150,
       align: 'left',
       key: 'taskProgress',
@@ -81,39 +81,32 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
       ),
     },
     {
-      title: 'Created Date',
-      dataIndex: 'tkuCreatedDate',
+      title: 'Update Date',
+      dataIndex: 'taskUpdateDate',
       width: 150,
       filtered: true,
       align: 'left',
       render: (date) => formatDate(date),
     },
     {
-      title: 'Updated Date',
-      dataIndex: 'tkuUpdatedDate',
-      width: 150,
-      align: 'left',
-      render: (date) => formatDate(date),
-    },
-    {
       title: 'Details',
-      dataIndex: 'tkuDescription',
+      dataIndex: 'taskUpdateDetails',
       width: 200,
       ellipsis: true,
       render: (text, record) => (
-        <TaskTableRow record={record} onClick={() => handleTaskClick(record.taskUpdateTaskId_id.toString())} />
+        <TaskTableRow record={record} onClick={() => handleTaskClick(record.taskUpdateId.toString())} />
       ),
     },
   ];
 
   return (
     <>
-      <Table<TaskUpdate>
+      <Table
         onRow={(record) => {
           return {
-            onClick: () => handleTaskClick(record.taskUpdateTaskId_id.toString()),
+            onClick: () => handleTaskClick(record.taskUpdateId.toString()),
             onChange: () => {
-              setSelectedRowKeys([record.taskUpdateTaskId_id.toString()]);
+              setSelectedRowKeys([record.taskUpdateId.toString()]);
             },
           };
         }}

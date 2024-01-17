@@ -91,15 +91,14 @@ export type  TaskPutData ={
     taskUpdateUser:number;
     taskUpdateChallenge:string;
     taskUpdateProgress:number;
+    taskUpdateDetails:string;
 }
 export type TaskUpdate = {
-    tkuIdpk: number;
-    tkuTitle: string;
-    tkuDescription: string;
-    tkuChallenge: string;
-    taskUpdateTaskId_id: number;
-    tkuCreatedDate: string;
-    tkuUpdatedDate: string;
-    taskUpdateUser_id: number;
-    tkuProgress: number;
+    taskUpdateId: number;
+    taskUpdateTitle: string;
+    taskUpdateDetails: string;
+    taskUpdateTaskAssignmentId: number;
+    taskUpdateDate: string;
+    taskUpdateUserId: number;
+    taskUpdateProgress: number;
 };

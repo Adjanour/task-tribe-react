@@ -65,7 +65,7 @@ export const useTaskAPI = () => {
         }
     };
     const { postData:postTaskUpdate,postError:TaskUpdateError } = usePostData({
-        endpoint: 'http://localhost:8000/api/user/task/update/',
+        endpoint: 'http://localhost:8000/api/user/task-updates/',
         token: Token
     });
     const { postData, isPosting, postError, } = usePostData({
@@ -130,7 +130,7 @@ export const useTaskAPI = () => {
             taskUpdateTaskId,
             taskUpdateTitle,
             taskUpdateChallenge,
-            taskUpdateDescription,
+            taskUpdateDetails,
             // taskUpdateUser,
             taskUpdateProgress
         } = newUpdate;
@@ -145,12 +145,12 @@ export const useTaskAPI = () => {
     
         // Create the data object
         const data = {
-            taskUpdateTaskId: taskId,
+            taskUpdateTaskAssignmentId: taskId,
             taskUpdateChallenge,
             taskUpdateTitle,
             taskUpdateProgress,
-            taskUpdateDescription,
-            taskUpdateUser: 1 // Assuming a default value
+            taskUpdateDetails,
+            taskUpdateUserId: 1 // Assuming a default value
         };
     
         // Call the API to post the task update
@@ -162,7 +162,7 @@ export const useTaskAPI = () => {
 
     const {data:Tasks, refetchData: refetchTasks, isLoading:isLoadingGettingTasks, error:errorFetchingTasks} = useGetData({
             dataAlias: "task",
-            endpoint: "http://localhost:8000/api/user/tasks",
+            endpoint: "http://localhost:8000/api/v1/task-assignments/",
             token: Token,
     });
     const task = {

@@ -32,6 +32,8 @@ export const useTaskAPI = () => {
                 taskStatusId,
                 taskPriorityId,
                 taskDescription,
+                assignedBy : taskAssigneeUserId,
+                assignedBy : taskCreatedByUserId
             } = newTask;
 
             // Process the start and end date strings
@@ -42,7 +44,10 @@ export const useTaskAPI = () => {
             const Task = {
                 taskName,
                 taskStartDate: startDate,
+                taskDueDate: endDate,
                 taskEndDate: endDate,
+                taskAssigneeUserId,
+                taskCreatedByUserId,
                 taskStatusId,
                 taskPriorityId,
                 taskDescription
@@ -69,7 +74,7 @@ export const useTaskAPI = () => {
         token: Token
     });
     const { postData, isPosting, postError, } = usePostData({
-        endpoint: 'http://localhost:8000/api/user/task/create/',
+        endpoint: 'http://localhost:8000/api/v1/tasks/',
         token: Token
     });
     /**
@@ -97,15 +102,15 @@ export const useTaskAPI = () => {
     const assignTask = async (taskId: number, assigneeId: number, assignerId: number): Promise<number> => {
         try {
             const taskData = {
-                tkaTask: taskId,
-                tkaAssignee: assigneeId,
-                tkaAssigner: assignerId,
+                taskId: taskId,
+                assigneeUserId: assigneeId,
+                assignerUserId: assignerId,
             };
 
             console.log(taskData);
 
             const response = await axios.post(
-                "/user/tasks/",
+                "/api/v1/task-assignments/",
                 taskData,
                 {
                     headers: {

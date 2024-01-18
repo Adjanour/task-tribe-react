@@ -64,6 +64,7 @@ export interface TaskPostData{
     taskName : string;
     taskStartDate:CustomDate;
     taskEndDate:CustomDate;
+    taskDueDate:CustomDate;
     assignedBy:number;
     assignedTo:number[];
     taskStatusId:number;

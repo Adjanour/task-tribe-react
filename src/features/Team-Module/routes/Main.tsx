@@ -11,7 +11,7 @@ import { useGetData } from '@/hooks/useGetData';
 
 const TeamCreatePage = () => {
     const task = useTaskContext();
-    const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/user/team/",token:""})
+    const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/v1/teams/",token:""})
     const [state,setState] = useState({
         selectedTaskId: "0",
         statusData: { label: "", value: "" },
@@ -40,6 +40,7 @@ const TeamCreatePage = () => {
           try {
             const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
             setState({ ...state, taskUpdates: taskUpdates });
+            setState({...state, taskUpdates: taskUpdates });
           } catch (error) {
             console.error("Error refetching task updates:", error);
           }

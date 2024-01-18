@@ -18,14 +18,14 @@ export async function fetchTaskDescription(param: string): Promise<{taskDescript
     return taskDescription;
 }
 export async function fetchTaskAssigner(param: string): Promise<UserValue> {
-    const res = await axios.get(`/user/task-details/${param}`);
-    const { AssignerFullName, tkaAssigner_id } = res.data[0];
-    return { label: AssignerFullName, value: tkaAssigner_id };
+    const res = await axios.get(`/api/v1/task-assignments/${param}`);
+    const { taskAssignerName,taskAssignerUserId } = res.data[0];
+    return { label: taskAssignerName, value: taskAssignerUserId };
 }
 export async function fetchTaskAssignees(param: string): Promise<UserValue[]> {
-    const res = await axios.get(`user/task-details/${param}`);
-    return res.data.map( ({tkaAssignee_id,fullName}:Task) => ({
-        label: fullName, value: tkaAssignee_id,
+    const res = await axios.get(`api/v1/task-assignments/${param}`);
+    return res.data.map( ({taskAssigneeName,taskAssigneeUserId}:Task) => ({
+        label: taskAssigneeName, value: taskAssigneeUserId
     }))
 }
 
@@ -59,13 +59,17 @@ export type Task = {
     fullName: string;
     taskDuration: number;
     taskProgress: string;
+    taskAssigneeName:string;
+    taskAssigneeUserId:string;
+    taskAssignerName:string;
+    taskAssignerUserId:string;
     taskSlug: string | null;
 }
 
 export async function fetchTaskPriority(param:string): Promise<UserValue> {
-    const res = await axios.get(`/api/v1/priorities/${param}`)
-    const { priorityName, priorityId } = res.data;
-    return { label: priorityName, value: priorityId };
+    const res = await axios.get(`/api/v1/tasks/${param}`)
+    const { taskPriority, taskPriorityId } = res.data;
+    return { label: taskPriority, value: taskPriorityId };
 }
 export async function fetchTasks(): Promise<UserValue[]> {
     const res = await axios.get('/api/v1/tasks')
@@ -85,7 +89,7 @@ export async function fetchTaskStatuses(): Promise<UserValue[]> {
 
 }
 export async function fetchTaskPriorities(): Promise<UserValue[]> {
-    const res = await axios.get('/api/v1/priorities/')
+    const res = await axios.get('api/v1/priorities/')
     return res.data.map( ({priorityId,priorityName}:Priority) => ({
         label: `${priorityName}`,
         value: priorityId,
@@ -94,7 +98,7 @@ export async function fetchTaskPriorities(): Promise<UserValue[]> {
 export async function fetchUsers(): Promise<UserValue[]> {
     const res = await axios.get('/api/v1/users')
     return res.data.map( ({id,firstName,lastName}:{id:number,email:string,firstName:string,lastName:string}) => ({
-        label: `${firstName} ${lastName}`,
+        label: `${lastName} ${firstName}`,
         value: id,
     }))
 

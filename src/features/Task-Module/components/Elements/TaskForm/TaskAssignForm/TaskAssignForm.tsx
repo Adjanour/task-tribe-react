@@ -2,6 +2,7 @@ import { UserValue, fetchTaskStatus, fetchTaskPriority, fetchTaskAssignees, fetc
 import { message,Form } from "antd";
 import { useState, useEffect } from "react";
 import {TaskAssignFormContents} from "./TaskAssignFormContents";
+import {useTaskAPI} from "@/features/Task-Module/hooks/useTaskAPI";
 
 
 type description = {
@@ -84,7 +85,6 @@ export const TaskAssignForm = () => {
             // Fetch the initial data
           
               const initialData =  {
-                 
                     task_description: "This is a task description",
                     taskStatus:state.statusData,
                     assignedTo:state.assigneesData,
@@ -108,13 +108,19 @@ export const TaskAssignForm = () => {
       // Call the function to fetch initial data
       fetchInitialData();
     }, [form,state.taskId]);
+    const {assignTask} = useTaskAPI()
 
     const onFinish = async (formData: any) => {
       try {
         setState({ ...state, loading: true });
-  
+        console.log(formData)
+          const {task_name,assignedBy,assignedTo} = formData
+          for (const assignee of assignedTo) {
+              const response = await assignTask(task_name, assignee, assignedBy.value);
+              return response.toString();
+          }
         try {
-          const response = await fetch("/api/createTask", {
+          const response = await fetch("/api/v1/tasks", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

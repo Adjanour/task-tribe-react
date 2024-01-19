@@ -44,7 +44,7 @@ export const Dashboard = () => {
     return (
         <div>
             {/* Task Overview Section */}
-            <Row gutter={20}>
+            <Row gutter={20} style={{justifyContent:'center'}}>
                 <Col span={5}>
                     <Card>
                         <Statistic prefix={<CheckCircleOutlined style={{ fontSize: 28, color: '#201b1b' }} />} title="Total Tasks" value={totalTasks} />
@@ -70,7 +70,7 @@ export const Dashboard = () => {
             {/* Task Table Section */}
             <Row style={{ marginTop: '20px' }}>
                 <Col span={24}>
-                    <Card title="Recent Tasks" style={{ minHeight: '400px' }}>
+                    <Card title="Recent Tasks" style={{ minHeight: '400px',height:"100%" }}>
                         <Table dataSource={taskTableData} columns={columns} pagination={false} />
                     </Card>
                 </Col>

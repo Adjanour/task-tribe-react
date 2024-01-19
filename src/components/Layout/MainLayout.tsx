@@ -11,7 +11,7 @@ export const MainLayout = ({children}:MainLayoutProps) => {
     <div>
         <AccordionWithSearch/>
         <main className='layout'>
-          <div><Navbar/></div>
+          <div style={{marginBottom:"5px",marginTop:"5px"}}><Navbar/></div>
           <div>{children}</div>
           </main>
     </div>

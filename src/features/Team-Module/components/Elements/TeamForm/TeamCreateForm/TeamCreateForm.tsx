@@ -18,7 +18,7 @@ export function TeamCreateForm({refetchTeams}:{refetchTeams:()=>void}) {
         loading: false,
     });
 
-    const { postData,isPosting,postError} = usePostData({endpoint:"http://localhost:8000/api/user/team/",token:""})
+    const { postData,isPosting,postError} = usePostData({endpoint:"http://localhost:8000/api/v1/teams/",token:""})
 
     const onFinish = async (values: any) => {
 

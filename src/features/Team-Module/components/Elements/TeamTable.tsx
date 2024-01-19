@@ -4,7 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 
 
 export type Team = {
-   teamIdpk:number,
+   teamId:number,
    teamName: string,
    teamDescription: string,
    teamIsActive : boolean,
@@ -20,8 +20,8 @@ interface TeamTableProps {
 
 const TeamTable: React.FC<TeamTableProps> = ({ teams,yScroll,pageSize,setState }) => {
 
-    const handleTaskClick = (taskId: string) => {
-        setState((prevState: any) => ({ ...prevState, selectedTaskId: taskId }));
+    const handleTaskClick = (teamId: string) => {
+        setState((prevState: any) => ({ ...prevState, selectedTeamId: teamId }));
       };
 
 
@@ -83,14 +83,14 @@ const TeamTable: React.FC<TeamTableProps> = ({ teams,yScroll,pageSize,setState }
                 onRow={(record) => {
                     return {
                         onDoubleClick: () => {
-                            handleTaskClick(record.teamIdpk.toString());
+                            handleTaskClick(record.teamId.toString());
                         }
                     };
                 }}
                 className="mb-0"
                 size='middle'
                 dataSource={teams}
-                rowKey={(record) => record.teamIdpk}
+                rowKey={(record) => record.teamId}
                 columns={columns}
                 bordered
                 pagination={{ pageSize: pageSize }}

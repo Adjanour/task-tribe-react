@@ -8,37 +8,70 @@ import TeamTable from "@/features/Team-Module/components/Elements/TeamTable";
 import { TaskAssignForm } from '../components/Elements/TeamForm/TaskAssignForm';
 import TaskUpdateTable from '../components/Elements/TaskUpdateTable';
 import { useGetData } from '@/hooks/useGetData';
+import {TeamDetails} from "@/features/Team-Module/components/TeamDetails";
+
+const defaultTeamDetails = {
+    teamDetailsId: 0,
+    teamDetailsTeamSize: 0,
+    teamDetailsProjectCount: 0,
+    teamDetailsTeamNotes: '',
+    teamDetailsCreatedDate: '',
+    teamDetailsTeamId: {
+        teamId: 0,
+        teamName: '',
+        teamDescription: '',
+        teamCreatedDate: '',
+        teamLeadUserId: {
+            id: 0,
+            email: '',
+            userName: '',
+            firstName: '',
+            lastName: '',
+            dateOfBirth: '',
+            isActive: false,
+            createdDate: '',
+            lastEditDate: '',
+        },
+        teamProjectId: 0
+    },
+};
 
 const TeamCreatePage = () => {
     const task = useTaskContext();
     const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/v1/teams/",token:""})
+    const teamDetails = useGetData({dataAlias:"teamDetails",endpoint:"http://localhost:8000/api/v1/team-details/",token:""})
     const [state,setState] = useState({
-        selectedTaskId: "0",
+        selectedTeamId: "1",
         statusData: { label: "", value: "" },
         taskData: { label: "", value: "" },
         startDate: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
         endDate: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
         loading: false,
         taskUpdates: [],
-        pageState: 0
+        pageState: 0,
+        teamDetails: [defaultTeamDetails],
     })
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-              const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
-              setState({ ...state, taskUpdates: taskUpdates });
-            } catch (error) {
-              console.error("Error fetching task updates:", error);
-            }
-          };
-      
-          fetchData();
-        }, [state.selectedTaskId]);
+        // const fetchData = async () => {
+        //     try {
+        //       const taskUpdates = await fetchTaskUpdates(state.selectedTeamId);
+        //       setState({ ...state, taskUpdates: taskUpdates });
+        //     } catch (error) {
+        //       console.error("Error fetching task updates:", error);
+        //     }
+        //   };
+        //
+        //   fetchData();
+        const teamDetailsFiltered = teamDetails.data?.filter((teamDetails: any) => teamDetails.teamDetailsTeamId?.teamId == state.selectedTeamId);
+        console.log(teamDetails.data)
+        setState({ ...state, teamDetails: teamDetailsFiltered });
+        console.log(teamDetailsFiltered)
+        }, [state.selectedTeamId]);
       
         const refetchData = async () => {
           try {
-            const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
+            const taskUpdates = await fetchTaskUpdates(state.selectedTeamId);
             setState({ ...state, taskUpdates: taskUpdates });
             setState({...state, taskUpdates: taskUpdates });
           } catch (error) {
@@ -57,7 +90,7 @@ const TeamCreatePage = () => {
                 <FloatButton tooltip={<div>Assign</div>}  icon={<EditOutlined />} className="p-1" onClick={() => handlePageChange(1)} />
             </FloatButton.Group>
             <Row className="w-fit">
-                <Col span={9}>
+                <Col span={12}>
                     <Card className="h-full p-0">
                         <div className="w-full mb-0 md:mb-0 p-0">
                             <div className="bg-gray-200 w-full rounded-md mb-2 dark:bg-white dark:text-black">
@@ -75,16 +108,17 @@ const TeamCreatePage = () => {
                         </div>
                     </Card>
                 </Col>
-                <Col span={15}>
+                <Col span={12}>
                     <Card className="h-full">
-                        <div className="w-full mb-0">
+                        <div className="w-fit mb-0">
                             <div className="bg-gray-200 rounded-md mb-0 dark:bg-white dark:text-black">
                                 <p className="text-2xl">Team Details</p>
                             </div>
                             {task.isLoadingGettingTasks ? (
                                 <Skeleton active />
                             ) : (
-                                <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={refetchData} />
+                                // <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={refetchData} />
+                                <TeamDetails teamDetails={state.teamDetails}/>
                             )}
                         </div>
                     </Card>

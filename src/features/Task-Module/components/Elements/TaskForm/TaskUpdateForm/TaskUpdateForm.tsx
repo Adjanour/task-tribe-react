@@ -1,7 +1,7 @@
 import  { useEffect, useState } from "react";
 import { Form, message } from "antd";
 import { useTaskAPI } from "@/features/Task-Module/hooks/useTaskAPI";
-import { UserValue, fetchTaskStatus, fetchTask } from "@/features/Task-Module/utils/functions";
+import {UserValue, fetchTaskStatus, fetchTaskAssignment} from "@/features/Task-Module/utils/functions";
 import TaskProgressUpdateFormContent from "./TaskUpdateFormContent";
 
 interface TaskProgressUpdateFormProps {
@@ -16,6 +16,7 @@ export interface State {
   startDate: string;
   endDate: string;
   loading: boolean;
+  taskAssignmentId: string|UserValue|UserValue[];
 }
 
 export  function TaskUpdateForm({
@@ -26,6 +27,7 @@ export  function TaskUpdateForm({
 
   const [state, setState] = useState<State>({
     percent: 0,
+    taskAssignmentId: taskId,
     statusData: { label: "", value: "" },
     taskData: { label: "", value: "" },
     startDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
@@ -38,20 +40,28 @@ export  function TaskUpdateForm({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const status = await fetchTaskStatus(taskId);
-        const task = await fetchTask(taskId);
+        try{
+          const status = await fetchTaskStatus(taskId);
+          setState((prevState)=>({...prevState,statusData:status}))
+        }
+        catch (error) {
+          console.error("Error fetching data:", error);
+        }
+        try{
+          const task = await fetchTaskAssignment(taskId);
+          setState((prevState)=>({...prevState,taskData:task}))
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
 
-        setState((prevState) => ({
-          ...prevState,
-          statusData: status,
-          taskData: task,
-        }));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, [taskId]);
+
+  }, [state.taskAssignmentId, taskId]);
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -59,7 +69,7 @@ export  function TaskUpdateForm({
         setState((prevState) => ({ ...prevState, loading: true }));
 
         const initialData = {
-          taskUpdateTaskId: state.taskData,
+          taskUpdateTaskAssignmentId: state.taskData,
           currentStatus: state.statusData,
         };
 
@@ -73,7 +83,7 @@ export  function TaskUpdateForm({
     };
 
     fetchInitialData();
-  }, [form, state.statusData, state.taskData, taskId]);
+  }, [form,state.taskAssignmentId]);
 
 
   const { addTaskUpdate } = useTaskAPI();
@@ -83,7 +93,6 @@ export  function TaskUpdateForm({
 
     try {
       setState((prevState) => ({ ...prevState, loading: true }));
-
       const response = await addTaskUpdate(formData);
 
       if (response) {

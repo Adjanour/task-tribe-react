@@ -89,9 +89,9 @@ const TeamCreatePage = () => {
                 <FloatButton tooltip={<div>Create</div>} icon={<PlusOutlined />} className="p-1"   onClick={() => handlePageChange(0)} />
                 <FloatButton tooltip={<div>Assign</div>}  icon={<EditOutlined />} className="p-1" onClick={() => handlePageChange(1)} />
             </FloatButton.Group>
-            <Row className="w-fit">
-                <Col span={12}>
-                    <Card className="h-full p-0">
+            <Row className="w-full">
+                <Col span={8}>
+                    <Card className="w-full h-full p-0">
                         <div className="w-full mb-0 md:mb-0 p-0">
                             <div className="bg-gray-200 w-full rounded-md mb-2 dark:bg-white dark:text-black">
                                 {state.pageState === 0 && <p className="text-2xl">Team </p>}
@@ -108,18 +108,20 @@ const TeamCreatePage = () => {
                         </div>
                     </Card>
                 </Col>
-                <Col span={12}>
+                <Col span={16}>
                     <Card className="h-full">
-                        <div className="w-fit mb-0">
+                        <div className="w-full mb-0 justify-center">
                             <div className="bg-gray-200 rounded-md mb-0 dark:bg-white dark:text-black">
                                 <p className="text-2xl">Team Details</p>
                             </div>
+                            <div className="mx-auto">
                             {task.isLoadingGettingTasks ? (
                                 <Skeleton active />
                             ) : (
                                 // <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={refetchData} />
                                 <TeamDetails teamDetails={state.teamDetails}/>
                             )}
+                            </div>
                         </div>
                     </Card>
                 </Col>

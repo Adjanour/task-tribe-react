@@ -25,7 +25,7 @@ function Navbar() {
             <NavbarItem key={index} item={item}/>
         )}
         <div className='circle'>
-            <img src='https://i.ibb.co/7t7GK9X/circle-1.png' alt='profile' className='profile'/>
+            {/*<img src='https://i.ibb.co/7t7GK9X/circle-1.png' alt='profile' className='profile'/>*/}
         </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Table, Badge, Tooltip, Progress} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import {Button} from "@/features/Task-Module/components/Elements/Button";
 
 
 export type Task = {
@@ -31,6 +32,36 @@ interface TaskTableProps {
     setState:any;
 }
 
+const EditTaskButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+    <Tooltip title="Edit Task">
+        <Button onClick={onClick} className="bg-blue-500 text-white dark:text-white dark:bg-blue-500 hover:text-white rounded-md" text={"Edit Task"} icon="+" />
+    </Tooltip>
+);
+
+type Status = 'Not Started' | 'In Progress' | 'Completed' | 'Cancelled'; // Add more statuss
+type StatusColor = 'warning' | 'processing' | 'success' | 'error';
+/**
+ * Maps the status values to their corresponding colors.
+ * @param status - The status value.
+ * @returns The color associated with the given status.
+ */
+const getStatusColor = (status: Status): StatusColor => {
+    // Define a mapping of status values to colors
+    const statusColorMap: Record<string, "warning" | "processing" | "success" | "error"> = {
+        'Not Started': 'warning',
+        'In Progress': 'processing',
+        'Pending': 'warning',
+        'Started': 'processing',
+        'Completed': 'success',
+        'Cancelled': 'error',
+        // Add more status-color mappings as needed
+    };
+
+    // Use the mapping to get the color for the given status
+    return statusColorMap[status] || 'default';
+};
+
+
 const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }) => {
 
     const handleTaskClick = (taskId: string) => {
@@ -51,7 +82,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             title: 'Status',
             dataIndex: 'taskStatus',
             render: (text) => (
-                <Badge status={text === 'Not Started' ? 'warning' : 'success'} text={text} />
+                <Badge status={getStatusColor(text)} text={text} />
             ),
             width: 150,
             fixed:'left',
@@ -81,7 +112,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             sorter: (a, b) => parseFloat(a.taskProgress) - parseFloat(b.taskProgress),
             render: (progress) => (
               <Progress
-                percent={parseFloat(progress)}
+                percent={+parseFloat(progress).toFixed(2)}
                 style={{ width: '75%' }}
                 size={[150, 25]}
                 format={() => `${parseFloat(progress)}%`}
@@ -129,6 +160,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
                     <span>{text}</span>
                 </Tooltip>
             ),
+        },
+        {
+            title: 'Action',
+            key: 'operation',
+            fixed: 'right',
+            align: 'center',
+            width: 150,
+            render: () => <EditTaskButton onClick={() => handleTaskClick('1')} />,
         },
 
     ];

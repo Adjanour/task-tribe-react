@@ -2,13 +2,14 @@
 import React from "react";
 import { DatePicker, Form,  InputNumber,  Progress, Select} from "antd";
 import { HolidayComponent } from "@/components/HolidayComponent/Holiday";
-import { fetchTasks, fetchTaskStatuses } from "@/features/Task-Module/utils/functions";
+import {fetchTaskAssignemnts, fetchTasks, fetchTaskStatuses} from "@/features/Task-Module/utils/functions";
 import { SelectEdit } from "../../SelectEdit";
 import { TextAreaEdit } from "../../TextAreaEdit";
 import { InputEdit } from "../../InputEdit";
 import { Button } from "../../Button";
 import { State } from "./TaskUpdateForm";
 import { processDateString } from "@/features/Task-Module/utils/format";
+import  dayjs from 'dayjs'
 
 interface TaskUpdateFormContentProps {
     state : State;
@@ -35,7 +36,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                 </td>
                 <td className="">
                     <Form.Item name="taskStartDate" className="w-fit mb-0"> 
-                        <DatePicker className="w-fit text-sm" format="DD MMM YYYY" onChange={(value)=>handleDateChange(value,1)}  />
+                        <DatePicker className="w-fit text-sm" format="DD MMM YYYY" value={dayjs(new Date())} onChange={(value)=>handleDateChange(value,1)}  />
                     </Form.Item>
                 </td>
                 <td className="flex justify-end  min-w-[80px] mr-1">
@@ -43,7 +44,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                 </td>
                 <td>
                     <Form.Item name="taskEndDate" className="w-fit mb-0">
-                        <DatePicker className="w-fit text-sm" format="DD MMM YYYY " onChange={(value)=>handleDateChange(value,2)} />
+                        <DatePicker className="w-fit text-sm" format="DD MMM YYYY " value={dayjs()} onChange={(value)=>handleDateChange(value,2)} />
                     </Form.Item>
                 </td>
             </tr>
@@ -62,7 +63,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                 </td>
                 <td>
                     <Form.Item  name="taskUpdateTaskAssignmentId" rules={[{ required: true, message: 'Please select a task' }]} className='mb-1'>
-                        <SelectEdit mode="single" fetchOptions={fetchTasks} placeholder="Select task "/>
+                        <SelectEdit mode="single" fetchOptions={fetchTaskAssignemnts} placeholder="Select task" />
                     </Form.Item>
                 </td>
                 <td className="flex float-right  items-center justify-center mt-1 ">

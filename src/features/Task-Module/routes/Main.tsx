@@ -86,7 +86,7 @@ const TaskCreatePage = () => {
                             {task.isLoadingGettingTasks ? (
                                 <Skeleton active />
                             ) : (
-                                <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} refetchData={refetchData} />
+                                <TaskUpdateTable pageSize={5} tasks={state.taskUpdates} yScroll={295} selectedTask={state.selectedTaskId} refetchData={refetchData} />
                             )}
                         </div>
                     </Card>
@@ -100,7 +100,7 @@ const TaskCreatePage = () => {
                         {task.isLoadingGettingTasks ? (
                             <Skeleton active />
                         ) : (
-                            <TaskTable setState={setState} pageSize={5} tasks={task.Tasks} yScroll={260} />
+                            <TaskTable setState={setState} pageSize={50} tasks={task.Tasks} yScroll={350} />
                         )}
 
                     </Card>

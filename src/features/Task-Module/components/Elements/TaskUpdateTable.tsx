@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Tooltip, Progress } from 'antd';
+import {Table, Tooltip, Progress, Button} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { TaskUpdate } from '@/features/Task-Module';
@@ -10,6 +10,7 @@ interface TaskTableProps {
   yScroll: number;
   pageSize: number;
   refetchData: any;
+  selectedTask: string;
 }
 
 const getStatus = (progress: number) => {
@@ -38,9 +39,9 @@ const TaskTableRow = ({ record, onClick }: { record: TaskUpdate; onClick: () => 
   </Tooltip>
 );
 
-const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetchData }) => {
+const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetchData,selectedTask }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedTaskId, setSelectedTaskId] = useState<string>('');
+  const [selectedTaskId, setSelectedTaskId] = useState<string>(selectedTask);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const handleTaskClick = (taskId: string) => {
@@ -77,7 +78,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
       align: 'left',
       key: 'taskProgress',
       render: (progress) => (
-        <Progress percent={progress} style={{ width: '75%' }} size={[150, 25]} format={() => `${progress}%`} showInfo status={getStatus(progress)} />
+        <Progress percent={+parseFloat(progress).toFixed(2)} style={{ width: '75%' }} size={[150, 25]} format={() => `${parseFloat(progress)}%`}  showInfo status={getStatus(progress)} />
       ),
     },
     {
@@ -120,6 +121,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, yScroll, pageSize, refetch
         pagination={{ pageSize }}
         scroll={{ x: '1300', y: yScroll }}
       />
+      <Button onClick={() => handleTaskClick(selectedTaskId)} className="bg-white-500 text-black dark:text-white dark:bg-black">Update</Button>
       <TaskDetailsModal key={5} isVisible={isModalVisible} taskId={selectedTaskId} onClose={handleModalCancel} refetchData={refetchData} />
     </>
   );

@@ -4,6 +4,7 @@ import { Outlet, useRouteError } from "react-router-dom";
 import { Spinner } from "@/components/Elements";
 import { MainLayout } from "@/components/Layout";
 import { lazyImport } from "@/utils/lazyImports";
+import {ProjectRoutes} from "@/features/Project-Module/routes";
 
 const { TaskRoutes } = lazyImport(
   () => import("@/features/Task-Module"),
@@ -52,7 +53,7 @@ export const protectedRoutes = [
       { path: "task/*", element: <TaskRoutes /> },
       { path: "teams/*", element: <TeamRoutes /> },
       { path: "settings/*", element: <h1>Profile</h1> },
-      { path: "projects/*", element: <h1>Profile</h1> },
+      { path: "projects/*", element: <ProjectRoutes /> },
       { path: "education/*", element: <h1>Profile</h1> },
     ],
   },

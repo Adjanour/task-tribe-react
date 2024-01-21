@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Space } from 'antd';
+import { Link } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
 
 interface LoginFormProps {
   onLogin: (values: { email: string; password: string }) => void;
@@ -33,9 +34,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       </Form.Item>
 
       <Form.Item>
-        <Button htmlType="submit">
-          Login
-        </Button>
+        <Space>
+          <Button htmlType="submit">
+            Login
+          </Button>
+          <span>Don't have an account?</span>
+          <Link to="/auth/signup">Sign Up</Link>
+        </Space>
       </Form.Item>
     </Form>
   );

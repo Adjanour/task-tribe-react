@@ -53,18 +53,21 @@ export const useTaskAPI = () => {
                 taskDescription
             };
 
-            // Create the task and get the task ID
+            // Create the task and get the task ID 
             const taskId = await createTask(Task);
 
             // Assign the task to the assignees
             const { assignedTo, assignedBy } = newTask;
+            const assignTaskResponses = [];
+
             console.log(assignedTo);
             if (assignedTo) {
                 for (const assignee of assignedTo) {
                     const response = await assignTask(taskId, assignee, assignedBy);
-                    return response.toString();
+                    assignTaskResponses.push(response.toString());
                 }
             }
+            return assignTaskResponses[0]
         } catch (e) {
             return message.error(`Error creating and assigning task ${e}`);
         }
@@ -177,7 +180,7 @@ export const useTaskAPI = () => {
         errorFetchingTasks
     }
 
-    return {task,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,isPosting }
+    return {task,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,isPosting,TaskUpdateError,postError }
 }
 
 

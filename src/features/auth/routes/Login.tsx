@@ -32,7 +32,7 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <Layout title="Register your account">
+    <Layout title="Login">
       <LoginForm onLogin={handleLogin} />
   </Layout>
   );

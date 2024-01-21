@@ -41,40 +41,30 @@ export const TaskAssignForm = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const data = await fetchTaskStatus(state.taskId.toString());
-            setState((prevState)=>({...prevState,statusData:data}))
-          console.log(data); // Log the data after it's fetched
-          console.log(state);
+          const [statusData, priorityData, assigneesData, assignerData, taskDescription] = await Promise.all([
+            fetchTaskStatus(state.taskId.toString()),
+            fetchTaskPriority(state.taskId.toString()),
+            fetchTaskAssignees(state.taskId.toString()),
+            fetchTaskAssigner(state.taskId.toString()),
+            fetchTaskDescription(state.taskId.toString())
+          ]);
+    
+          setState((prevState) => ({
+            ...prevState,
+            statusData,
+            priorityData,
+            assigneesData,
+            assignerData,
+            taskDescription
+          }));
         } catch (error) {
-          console.error("Error fetching status data:", error);
-        }
-        try {
-          const data = await fetchTaskPriority(state.taskId.toString());
-            setState((prevState)=>({...prevState,priorityData:data}))
-        }catch (error){
-          console.error("Error fetching priority data:", error);
-        }
-        try {
-          const data = await fetchTaskAssignees(state.taskId.toString());
-            setState((prevState)=>({...prevState,assigneesData:data}))
-        }catch (error){
-          console.error("Error fetching task assignees data:", error);
-        }
-        try {
-          const data = await fetchTaskAssigner(state.taskId.toString());
-            setState((prevState)=>({...prevState,assignerData:data}))
-        }catch (error){
-          console.error("Error fetching assigner data:", error);
-        }
-        try {
-          const data = await fetchTaskDescription(state.taskId.toString());
-            setState((prevState)=>({...prevState,taskDescription:data}))
-        }catch (error){
-          console.error("Error fetching task description data:", error);
+          console.error("Error fetching data:", error);
         }
       };
+    
       fetchData();
-    }, [state.taskId])
+    }, [state.taskId]);
+    
     ;
     useEffect(() => {
      
@@ -115,9 +105,11 @@ export const TaskAssignForm = () => {
         setState({ ...state, loading: true });
         console.log(formData)
           const {task_name,assignedBy,assignedTo} = formData
+          const assignTaskResponses = [];
+
           for (const assignee of assignedTo) {
-              const response = await assignTask(task_name, assignee, assignedBy.value);
-              return response.toString();
+            const response = await assignTask(task_name, assignee, assignedBy.value);
+            assignTaskResponses.push(response.toString());
           }
         try {
           const response = await fetch("/api/v1/tasks", {

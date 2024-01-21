@@ -1,6 +1,7 @@
-import Navbar from '@/Navbar';
+
 import {AccordionWithSearch} from '@/components/AccordionControl';
 import React from 'react'
+import Navbar from '../NavBar/NavBar';
 type MainLayoutProps ={
     children: React.ReactNode;
 }

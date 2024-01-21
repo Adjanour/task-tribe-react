@@ -14,7 +14,7 @@ const Signup: React.FC = () => {
       await signupFn(values);
       // Optionally, redirect to the login page or perform any other action
       // Redirect logic: history.push('/login');
-      nav("/auth/login")
+      nav("/auth/login",{state:{fron:"auth/signup"}})
       notification.success({
         message: 'Signup Successful',
         description: 'You have successfully signed up!',
@@ -29,7 +29,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Layout title="Log in to your account">
+    <Layout title="Signup in to your account">
       <SignupForm onSignup={handleSignup} />
   </Layout>
   );

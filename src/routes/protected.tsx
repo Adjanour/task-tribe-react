@@ -5,6 +5,9 @@ import { Spinner } from "@/components/Elements";
 import { MainLayout } from "@/components/Layout";
 import { lazyImport } from "@/utils/lazyImports";
 import {ProjectRoutes} from "@/features/Project-Module/routes";
+import path from "path";
+import TaskDashboard from "@/components/Dashboards/TaskDashboard/TaskDashboard";
+import TaskDashboardPage from "@/components/Dashboards/TaskDashboard/TaskDashboardPage";
 
 const { TaskRoutes } = lazyImport(
   () => import("@/features/Task-Module"),
@@ -55,6 +58,7 @@ export const protectedRoutes = [
       { path: "settings/*", element: <h1>Profile</h1> },
       { path: "projects/*", element: <ProjectRoutes /> },
       { path: "education/*", element: <h1>Profile</h1> },
+      {path:"dashboards/task",element:<TaskDashboardPage/>}
     ],
   },
 ];

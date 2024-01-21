@@ -29,7 +29,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Layout title="Signup in to your account">
+    <Layout title="Sign up for your account">
       <SignupForm onSignup={handleSignup} />
   </Layout>
   );

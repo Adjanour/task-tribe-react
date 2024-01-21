@@ -27,15 +27,15 @@ export const TaskRoutes: React.FC = () => {
       <Routes>
         <Route
           path="assigned"
-          element={<PrivateRoute element={<TaskCreatePage />} path="assigned" />}
+          element={<PrivateRoute element={<TaskCreatePage />} path="/app/task/assigned" />}
         />
         <Route
           path="dashboard"
-          element={<PrivateRoute element={<Dashboard />} path="dashboard" />}
+          element={<PrivateRoute element={<Dashboard />} path="/app/task/dashboard" />}
         />
         <Route
           path="/kanban"
-          element={<PrivateRoute element={<KanbanBoard />} path='/kanban' />}
+          element={<PrivateRoute element={<KanbanBoard />} path='/app/task/kanban' />}
         />
         {/* Add more routes as needed */}
       </Routes>

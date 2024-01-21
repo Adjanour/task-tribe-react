@@ -4,6 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { queryClient } from '@/lib/react-query';
 import { QueryClientProvider } from 'react-query';
+import { IntlProvider } from "react-intl";
 
 const ErrorFallback = () => {
   return (
@@ -33,9 +34,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <IntlProvider locale="en">
         <QueryClientProvider client={queryClient}>
             <Router>{children}</Router>
         </QueryClientProvider>
+        </IntlProvider>
       </ErrorBoundary>
     </React.Suspense>
   );

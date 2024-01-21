@@ -14,7 +14,7 @@ const Signup: React.FC = () => {
       await signupFn(values);
       // Optionally, redirect to the login page or perform any other action
       // Redirect logic: history.push('/login');
-      nav("/auth/login",{state:{fron:"auth/signup"}})
+      nav("/auth/login",{state:{from:"auth/signup"}})
       notification.success({
         message: 'Signup Successful',
         description: 'You have successfully signed up!',

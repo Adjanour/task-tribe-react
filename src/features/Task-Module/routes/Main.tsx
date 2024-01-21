@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Card, Col, Divider, FloatButton, Row, Skeleton} from 'antd';
 import {EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {useTaskContext} from "@/features/Task-Module/stores/TaskContext";
@@ -9,7 +9,8 @@ import TaskTable from "@/features/Task-Module/components/Elements/TaskTable";
 import { TaskAssignForm } from '../components/Elements/TaskForm/TaskAssignForm';
 import { TaskUpdateForm } from '../components/Elements/TaskForm/TaskUpdateForm';
 
-const TaskCreatePage = () => {
+const 
+TaskCreatePage = () => {
     const task = useTaskContext();
     const [state,setState] = useState({
         selectedTaskId: "0",
@@ -21,6 +22,9 @@ const TaskCreatePage = () => {
         taskUpdates: [],
         pageState: 0
     })
+    useEffect(()=>{
+        task.refetchTasks()
+    },[])
 
     useEffect(() => {
         const fetchData = async () => {

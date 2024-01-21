@@ -10,6 +10,7 @@ import {
   loginWithEmailAndPassword,
   signupWithEmailAndPassword,
 } from '@/features/auth';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -36,6 +37,7 @@ const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
 const useAuth = () => {
   const [user, setUser] = useState<User | null | AuthUser>(null);
+  const navigate = useNavigate()
 
   const loadUser = useCallback(async () => {
     if (storage.getToken()) {
@@ -65,6 +67,7 @@ const useAuth = () => {
   const signOut = useCallback(() => {
     setUser(null);
     storage.clearToken();
+    navigate("/auth/login")
   }, []);
 
   const isLoggedIn = useCallback(() => !!storage.getToken(), []);

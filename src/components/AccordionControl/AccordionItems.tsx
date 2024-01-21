@@ -89,12 +89,12 @@ export const AccordionItems = [
     },
     {
         title:'Dashboards',
-        path: 'dashboard/',
+        path: 'dashboards/',
         icon: <ChartSquareBarIcon />,
         children: [
             {
                 title:'Task Dashboard',
-                path: 'dashboard/tasks',
+                path: 'dashboards/task',
                 icon: <ChartSquareBarIcon />,
             }
         ]

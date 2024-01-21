@@ -10,8 +10,6 @@ export type UserResponse = {
   user: AuthUser;
 };
 
-export type LoginSignupResponse ={
-   
-      token:string
-    
+export type LoginSignupResponse = {
+  token: string
 }

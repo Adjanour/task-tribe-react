@@ -70,17 +70,17 @@ export function ProjectForm({refetchProjects}:{refetchProjects:()=>void}) {
         }
         console.log(data)
         setState({ ...state, loading: true });
-        const response = await postData(data);
+        // const response = await postData(data);
 
-        if (postError) {
-            message.error("Error creating project");
-            console.error("Error creating project:", postError);
-            refetchProjects();
-        } else {
+        try {
+            const response = await postData(data);
             notification.success({ message: "Project created successfully" });
             console.log("Project created successfully:", values);
             refetchProjects();
             handleClearForm();
+        } catch (error) {
+            message.error("Error creating project");
+            console.error("Error creating project:", error);
         }
 
         setState({ ...state, loading: isPosting });

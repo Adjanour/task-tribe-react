@@ -99,7 +99,7 @@ export type Task = {
     taskAssignerUserId:string;
     taskSlug: string | null;
 }
-interface TaskAssignment {
+export interface TaskAssignment {
     taskAssignmentId: number;
     taskId: number;
     taskStatusId: number;

@@ -12,6 +12,7 @@ import {
     IdentificationIcon,
     ChartSquareBarIcon
   } from '@heroicons/react/outline';
+import { Children } from 'react';
   
 
 
@@ -83,6 +84,18 @@ export const AccordionItems = [
             {
                 title:'Assigned Teams',
                 path: 'teams/assigned',
+            }
+        ]
+    },
+    {
+        title:'Dashboards',
+        path: 'dashboard/',
+        icon: <ChartSquareBarIcon />,
+        children: [
+            {
+                title:'Task Dashboard',
+                path: 'dashboard/tasks',
+                icon: <ChartSquareBarIcon />,
             }
         ]
     },

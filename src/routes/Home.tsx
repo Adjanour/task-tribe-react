@@ -21,7 +21,7 @@ const Header = () => {
     return (
       <nav className="bg-blue-500 p-4 text-white">
         <div className="container mx-auto flex justify-between items-center">
-          <a href="/app/task" className="text-3xl font-bold">Task Tribe</a>
+          <a href="/auth/login" className="text-3xl font-bold">Task Tribe</a>
           {/* Add navigation links here if needed */}
         </div>
       </nav>
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">Task Management Made Easy</h1>
           <p className="text-lg mb-8">Efficiently organize, track, and manage your tasks with Task Tribe.</p>
-          <a href="https://adjanour.github.io" className="bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600 transition duration-300">Get Started</a>
+          <a href="https://portfolio.adjarnor.tech" className="bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600 transition duration-300">Get Started</a>
         </div>
       </header>
     );

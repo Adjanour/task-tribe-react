@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
-import logo from '@/assets/logo.svg';
-import { Link } from 'react-router-dom';
-import { Card } from 'antd';
-
+import logo from "@/assets/logo.svg";
+import africoda from "@/assets/africoda.jpeg";
+import { Link } from "react-router-dom";
+import { Card } from "antd";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -13,24 +13,17 @@ type LayoutProps = {
 export const Layout = ({ children, title }: LayoutProps) => {
   return (
     <>
-    
-       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <Link className="flex items-center text-white" to="/">
-            <img className="h-24 w-auto" src={logo} alt="Workflow" />
-          </Link>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+        <div className="rounded-full w-24 h-24 mb-4">
+          <img src={africoda} className="rounded-full" alt="africoda"/>
         </div>
-
-        <h2 className="mt-3 text-center text-3xl font-extrabold text-gray-900">{title}</h2>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md w-fit">
-      <Card>
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">{children}</div>
+        <Card className="px-2" style={{width:"500px"}}>
+          <div className="mb-3">
+            <p className="text-center mx-auto mb-2 text-2xl text-blue-200">{title}</p>
+          </div>
+          <div className="w-full">{children}</div>
         </Card>
       </div>
-    </div>
     </>
   );
 };

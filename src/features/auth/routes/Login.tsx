@@ -13,15 +13,18 @@ export const Login: React.FC = () => {
   const from = location.state?.from ? location.state?.from : "/app"
   const handleLogin = async (values: any) => {
     try {
+      
       // Call the login function
       await loginFn(values);
-      // Optionally, redirect to the dashboard or perform any other action
-      // Redirect logic: history.push('/dashboard');
+      
       notification.success({
         message: 'Login Successful',
         description: 'You have successfully logged in!',
       });
+
+      // Redirect to previous location
       navigate(from,{replace:true})
+
     } catch (error) {
       console.error('Login failed:', error);
       notification.error({

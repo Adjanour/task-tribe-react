@@ -22,9 +22,9 @@ export const AppRoutes = () => {
   const auth = useAuth()
 
   const commonRoutes = [{ path: '/', element: <Home/> }];
-  const routes = auth.isLoggedIn() ? protectedRoutes : publicRoutes;
+  // const routes = auth.isLoggedIn() ? protectedRoutes : publicRoutes;
 
-  const element = useRoutes([...routes, ...commonRoutes]);
+  const element = useRoutes([...protectedRoutes,...publicRoutes, ...commonRoutes]);
 
   return <>{element}</>;
 };

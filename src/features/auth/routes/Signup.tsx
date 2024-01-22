@@ -7,14 +7,15 @@ import { Layout } from '../components/Layout';
 
 const Signup: React.FC = () => {
   const { signupFn } = useAuth();
-  const nav = useNavigate()
+  const navigate = useNavigate()
   const handleSignup = async (values: any) => {
     try {
       // Call the signup function
       await signupFn(values);
-      // Optionally, redirect to the login page or perform any other action
-      // Redirect logic: history.push('/login');
-      nav("/auth/login",{state:{from:"auth/signup"}})
+
+      // Optionally, redirect to the login page
+      navigate("/auth/login",{state:{from:"auth/signup"}})
+      
       notification.success({
         message: 'Signup Successful',
         description: 'You have successfully signed up!',

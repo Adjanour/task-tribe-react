@@ -150,7 +150,7 @@ export const TaskAssignForm = () => {
       }
    
     return (
-        <Form form={form} onFinish={onFinish} className=" dark:text-white w-full">
+        <Form form={form} onFinish={onFinish} initialValues={{remember:true}} className=" dark:text-white w-full">
             <TaskAssignFormContents handleClearForm={handleClearForm} setState={setState} state={state}/>
         </Form>
     );

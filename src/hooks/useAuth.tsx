@@ -32,6 +32,9 @@ async function handleAuthResponse(data: LoginSignupResponse) {
   storage.setToken(token);
   console.log(storage.setToken(token));
 }
+async function handleSignUpAuthResponse(data:LoginSignupResponse){
+  
+}
 
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
@@ -56,7 +59,7 @@ const useAuth = () => {
 
   const signupFn = useCallback(async (data: SignupCredentialsDTO) => {
     const response = await signupWithEmailAndPassword(data);
-    await handleAuthResponse(response);
+    return response
   }, []);
 
   const logoutFn = useCallback(() => {

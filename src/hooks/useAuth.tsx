@@ -32,9 +32,6 @@ async function handleAuthResponse(data: LoginSignupResponse) {
   storage.setToken(token);
   console.log(storage.setToken(token));
 }
-async function handleSignUpAuthResponse(data:LoginSignupResponse){
-  
-}
 
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 

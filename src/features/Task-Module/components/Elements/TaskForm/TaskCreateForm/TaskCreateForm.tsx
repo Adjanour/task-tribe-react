@@ -53,6 +53,7 @@ export function TaskCreateForm() {
             console.error("Error creating task :", error);
         } finally {
             refetchTasks();
+            form.resetFields();
             setState({ ...state, loading: false });
         }
     };
@@ -63,7 +64,7 @@ export function TaskCreateForm() {
 
     return (
         <div className="w-full">
-            <Form form={form} onFinish={onFinish} className=" dark:text-white w-full" requiredMark={false}>
+            <Form form={form} onFinish={onFinish} initialValues={{remember:true}} className=" dark:text-white w-full" requiredMark={false}>
                 <TaskCreateFormContents
                     handleClearForm={handleClearForm}
                     loading={state.loading}

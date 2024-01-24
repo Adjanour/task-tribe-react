@@ -56,7 +56,7 @@ const useAuth = () => {
 
   const signupFn = useCallback(async (data: SignupCredentialsDTO) => {
     const response = await signupWithEmailAndPassword(data);
-    await handleAuthResponse(response);
+    return response
   }, []);
 
   const logoutFn = useCallback(() => {

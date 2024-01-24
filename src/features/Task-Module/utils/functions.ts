@@ -160,16 +160,15 @@ export async function fetchTaskPriorities(): Promise<UserValue[]> {
  * @returns {Promise<UserValue[]>} An array of UserValue objects.
  */
 export async function fetchUsers(): Promise<UserValue[]> {
-    const res = await axios.get('/api/v1/users');
+    const res = await axios.get('/api/v1/user-details/');
 
     // Map the response data to create an array of UserValue objects
-    return res.data.map(({id, firstName, lastName}: {
-        id: number,
-        email: string,
-        firstName: string,
-        lastName: string
+    return res.data.map(({userId, userName}: {
+        userId: number,
+        userName:string,
+
     }) => ({
-        label: `${lastName} ${firstName}`,
-        value: id,
+        label: userName,
+        value: userId,
     }));
 }

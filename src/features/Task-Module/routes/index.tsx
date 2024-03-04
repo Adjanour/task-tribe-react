@@ -5,6 +5,11 @@ import TaskCreatePage from '@/features/Task-Module/routes/Main';
 import { Dashboard } from '@/features/Task-Module/components/Dashboard';
 import KanbanBoard from '../components/Kanban/KanbanBoard';
 import useAuth from '@/hooks/useAuth';
+import TaskMePage from "@/features/Task-Module/routes/Me";
+import { List } from '../components/Kanban';
+import { TaskCalendarContainer } from '@/components/Calendar/TCalendar';
+import TaskTable from '../components/Elements/TaskTable';
+import { DataGrid } from '../components/Datagrid';
 
 interface PrivateRouteProps {
   element: React.ReactNode;
@@ -35,7 +40,19 @@ export const TaskRoutes: React.FC = () => {
         />
         <Route
           path="/kanban"
-          element={<PrivateRoute element={<KanbanBoard />} path='/app/task/kanban' />}
+          element={<PrivateRoute element={<List />} path='/app/task/kanban' />}
+        />
+        <Route
+            path="my"
+            element={<PrivateRoute element={<TaskMePage/>} path='/app/task/my' />}
+        />
+        <Route
+            path="calendar"
+            element={<PrivateRoute element={<TaskCalendarContainer/>} path='/app/task/calendar' />}
+        />
+        <Route
+            path="all"
+            element={<PrivateRoute element={<DataGrid/>} path='/app/task/my' />}
         />
         {/* Add more routes as needed */}
       </Routes>

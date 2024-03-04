@@ -3,6 +3,7 @@ import {Table, Badge, Tooltip} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import {Project} from "@/features/Project-Module";
 import {Button} from "@/features/Task-Module/components/Elements/Button";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
@@ -20,9 +21,15 @@ const GoToButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 
 const TeamTable: React.FC<ProjectTableProps> = ({ projects,yScroll,pageSize,setState }) => {
 
+    const nav = useNavigate()
+
     const handleTaskClick = (teamId: string) => {
         setState((prevState: any) => ({ ...prevState, selectedProjectId: teamId }));
       };
+
+    const openProject = (projectId: string) => {
+        nav(`/app/project/${projectId}`, { replace: true });
+    }
 
 
     const columns: ColumnsType<Project> = [
@@ -92,7 +99,7 @@ const TeamTable: React.FC<ProjectTableProps> = ({ projects,yScroll,pageSize,setS
                 onRow={(record) => {
                     return {
                         onDoubleClick: () => {
-                            handleTaskClick(record.projectId.toString());
+                            openProject(record.projectId.toString());
                         }
                     };
                 }}

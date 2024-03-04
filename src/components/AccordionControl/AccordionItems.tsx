@@ -10,8 +10,10 @@ import {
     GlobeAltIcon,
     LightningBoltIcon,
     IdentificationIcon,
-    ChartSquareBarIcon
+    ChartSquareBarIcon,
+    CalendarIcon
   } from '@heroicons/react/outline';
+import path from 'path';
 import { Children } from 'react';
   
 
@@ -26,7 +28,8 @@ export const AccordionItems = [
         title:'Task',
         icon: <ClipboardListIcon />,
         path:"task",
-        children: [
+        children: 
+        [
             {
                 title:'All Tasks',
                 path: 'task/all',
@@ -45,6 +48,16 @@ export const AccordionItems = [
                 title:'Dashboard',
                 path: 'task/dashboard',
                 icon: <ChartSquareBarIcon />,
+            },
+            {
+                title:'Calendar',
+                path: 'task/calendar',
+                icon: <CalendarIcon />,
+            },
+            {
+                title:'Kanban',
+                path:'task/Kanban',
+                icon: <ClipboardListIcon />,
             }
 
         ]

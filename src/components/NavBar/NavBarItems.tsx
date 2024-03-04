@@ -15,27 +15,27 @@ export const NavItems: NavItem[] = [
     {
         title: 'Profile',
         icon: <UserIcon />,
-        path: '/profile'
+        path: '/app/profile'
     },
     {
         title: 'Settings',
         icon: <SettingOutlined />,
-        path: '/settings'
+        path: '/app/settings'
     },
     {
         title: 'Messages',
         icon: <MessageOutlined />,
-        path: '/messages'
+        path: '/app/messages'
     },
     {
         title: 'Calendar',
         icon: <CalendarIcon />,
-        path: '/calendar'
+        path: '/app/calendar'
     },
     {
         title: 'Explore',
         icon: <GlobalOutlined />,
-        path: '/explore'
+        path: '/app/explore'
     },
     {
         title: 'Home',
@@ -45,7 +45,7 @@ export const NavItems: NavItem[] = [
     {
         title: 'Notification',
         icon: <ClipboardListIcon />,
-        path: '/notification'
+        path: '/app/notification'
     },
     // Add more items as needed
 ]

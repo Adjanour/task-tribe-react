@@ -28,7 +28,6 @@ interface AuthContext {
 async function handleAuthResponse(data: LoginSignupResponse) {
   const { token } = data;
   storage.setToken(token);
-
 }
 
 

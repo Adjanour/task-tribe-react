@@ -171,7 +171,7 @@ const TaskMePage = () => {
   // Effect to refetch tasks when the component mounts or when Tasks state changes
   useEffect(() => {
     refetchTasks();
-  }, [Tasks]);
+  }, []);
 
   // Effect to filter tasks for the current user when Tasks state changes
   useEffect(() => {

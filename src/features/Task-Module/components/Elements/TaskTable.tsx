@@ -1,7 +1,8 @@
 import React from 'react';
-import {Table, Badge, Tooltip, Progress} from 'antd';
+import {Table, Badge, Tooltip, Progress, Popconfirm,notification} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import {Button} from "@/features/Task-Module/components/Elements/Button";
+import axios from 'axios';
 
 
 export type Task = {
@@ -38,6 +39,15 @@ const EditTaskButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
     </Tooltip>
 );
 
+const DeleteTaskButton: React.FC<{ onClick: () => void}> =({onClick})=>(
+    <Tooltip title="Delete Task">
+          <Popconfirm title="Sure to delete?" onConfirm={onClick}>
+            <Button  style={{backgroundColor:"red"}}  className=" text-white  dark:text-white dark:bg-black hover:text-white rounded-md" text={"Delete Task"} icon="-"/>
+          </Popconfirm>
+    </Tooltip>
+);
+
+
 type Status = 'Not Started' | 'In Progress' | 'Completed' | 'Cancelled'; // Add more statuss
 type StatusColor = 'warning' | 'processing' | 'success' | 'error';
 /**
@@ -67,7 +77,13 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
     const handleTaskClick = (taskId: string) => {
         setState((prevState: any) => ({ ...prevState, selectedTaskId: taskId }));
       };
-
+    
+    const deleteTask = async (taskId: string) => {
+        const response = await axios.delete(`http://localhost:8000/api/v1/task-assignments/${taskId}`)
+        if (response.status === 200){
+            notification.success({message:"Task Deleted Successfully"})
+        }
+    }
 
     const columns: ColumnsType<Task> = [
         {
@@ -126,14 +142,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             title: 'Assigned To',
             dataIndex: 'taskAssigneeName',
             width: 200,
-            fixed:'left',
+           
             align: 'left',
         },
         {
             title: 'Assigned By',
             dataIndex: 'taskAssignerName',
             width: 200,
-            fixed:'left',
+            
             align: 'left',
         },
         {
@@ -167,9 +183,16 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             fixed: 'right',
             align: 'center',
             width: 150,
-            render: () => <EditTaskButton onClick={() => handleTaskClick('1')} />,
+            render: () => (<EditTaskButton onClick={() => handleTaskClick('1')} />)
         },
-
+        {
+            title:'Action',
+            key:'Delete',
+            fixed:'right',
+            align: 'center',
+            width: 150,
+            render: (text, record, index) =>(<DeleteTaskButton onClick={() => deleteTask(record.taskAssignmentId.toString())}/>)
+        }
     ];
     const getStatus = (progress: string) => {
         if (parseFloat(progress) === 100) {

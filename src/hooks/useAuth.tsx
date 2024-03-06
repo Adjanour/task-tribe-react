@@ -1,16 +1,15 @@
-import { useState, useEffect, useCallback } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import storage from '@/utils/storage';
 import {
   AuthUser,
+  getUser,
   LoginCredentialsDTO,
   LoginSignupResponse,
-  SignupCredentialsDTO,
-  UserResponse,
-  getUser,
   loginWithEmailAndPassword,
+  SignupCredentialsDTO,
   signupWithEmailAndPassword,
 } from '@/features/auth';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 interface User {
   id: number;
@@ -25,13 +24,12 @@ interface AuthContext {
   register: (username: string, email: string, password: string) => void;
 }
 
-const initialUser: User | null = null;
 
 async function handleAuthResponse(data: LoginSignupResponse) {
   const { token } = data;
   storage.setToken(token);
-  console.log(storage.setToken(token));
 }
+
 
 const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
@@ -39,24 +37,23 @@ const useAuth = () => {
   const [user, setUser] = useState<User | null | AuthUser>(null);
   const navigate = useNavigate()
 
-  const loadUser = useCallback(async () => {
+  const loadUser = async () => {
     if (storage.getToken()) {
-      const data = await getUser();
-      return data;
+      return await getUser();
     }
     return null;
-  }, []);
+  }
 
-  const loginFn = useCallback(async (data: LoginCredentialsDTO) => {
+  const loginFn = async (data: LoginCredentialsDTO) => {
     const response = await loginWithEmailAndPassword(data);
     console.log(response);
     setUser(await loadUser());
+    console.log(user)
     await handleAuthResponse(response);
-  }, [loadUser]);
+  }
 
   const signupFn = useCallback(async (data: SignupCredentialsDTO) => {
-    const response = await signupWithEmailAndPassword(data);
-    return response
+    return await signupWithEmailAndPassword(data)
   }, []);
 
   const logoutFn = useCallback(() => {
@@ -72,17 +69,17 @@ const useAuth = () => {
 
   const isLoggedIn = useCallback(() => !!storage.getToken(), []);
 
-  const getUserDetails = useCallback(() => user, [user]);
+  const getUserDetails = ()=> user
 
-  useEffect(() => {
-    const token = storage.getToken();
-    const storedUserData = localStorage.getItem('userData');
+  // useEffect(() => {
+  //   const token = storage.getToken();
+  //   const storedUserData = localStorage.getItem('userData');
 
-    if (token && storedUserData) {
-      const userData = JSON.parse(storedUserData);
-      setUser(userData);
-    }
-  }, []);
+  //   if (token && storedUserData) {
+  //     const userData = JSON.parse(storedUserData);
+  //     setUser(userData);
+  //   }
+  // }, []);
 
   useEffect(() => {
     let inactivityTimer: string | number | NodeJS.Timeout | undefined;
@@ -121,6 +118,7 @@ const useAuth = () => {
     loginFn,
     loadUser,
     signupFn,
+    user,
   };
 };
 

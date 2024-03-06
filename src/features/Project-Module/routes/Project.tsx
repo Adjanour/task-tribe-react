@@ -9,9 +9,10 @@ import { useGetData } from '@/hooks/useGetData';
 import {FloatButton, Card, Row, Col, Divider, Skeleton, Button} from 'antd';
 import {EditOutlined, PlusCircleOutlined, PlusOutlined, ScheduleOutlined, TeamOutlined} from '@ant-design/icons';
 import TeamTable from "@/features/Team-Module/components/Elements/TeamTable";
+import { useParams } from 'react-router-dom';
 
 export const defaultProject: Project = {
-    projectId: 1,
+    projectId: 2,
     projectName: 'Sample Project',
     projectStartDate: '2024-01-01',
     projectEndDate: '2024-12-31',
@@ -21,9 +22,10 @@ export const defaultProject: Project = {
 };
 
 export const ProjectPage = () => {
+    const params = useParams();
     const projects = useGetData({ dataAlias: 'team', endpoint: 'http://localhost:8000/api/v1/projects/', token: '' });
     const teamDetails = useGetData({dataAlias:"teamDetails",endpoint:"http://localhost:8000/api/v1/team-details/",token:""})
-    const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/v1/teams/",token:""})
+    const team = useGetData({dataAlias:"team",endpoint:`http://localhost:8000/api/v1/project-teams/${params.projectId}`,token:""})
 
     const [state, setState] = useState({
         selectedProjectId: '1',
@@ -65,33 +67,7 @@ export const ProjectPage = () => {
                     onClick={() => handlePageChange(2)}
                 />
             </FloatButton.Group>
-            {/* eslint-disable-next-line react/jsx-no-undef */}
-            {/*<Button.Group  style={{ right: 24 }}>*/}
-            {/*    <Button*/}
 
-            {/*        icon={<PlusCircleOutlined />}*/}
-            {/*        className="p-1"*/}
-            {/*        onClick={() => handlePageChange(0)}*/}
-            {/*    />*/}
-            {/*    <Button*/}
-
-            {/*        icon={<EditOutlined />}*/}
-            {/*        className="p-1"*/}
-            {/*        onClick={() => handlePageChange(1)}*/}
-            {/*    />*/}
-            {/*    <Button*/}
-
-            {/*        icon={<TeamOutlined />}*/}
-            {/*        className="p-1"*/}
-            {/*        onClick={() => handlePageChange(2)}*/}
-            {/*    />*/}
-            {/*    <Button*/}
-
-            {/*        icon={<ScheduleOutlined />}*/}
-            {/*        className="p-1"*/}
-            {/*        onClick={() => handlePageChange(3)}*/}
-            {/*    />*/}
-            {/*</Button.Group>*/}
             <Row className="w-full">
                 <Col span={9}>
                     <Card className="h-full p-0">

@@ -16,8 +16,7 @@ export const useGetData = ({dataAlias,endpoint,token}:UseGetDataProps) => {
         }})
         return response.data;
     }
-    const {data,refetch,isLoading,
-    error,} = useQuery([dataAlias,endpoint,token],fetcher,{
+    const {data,refetch,isLoading,error} = useQuery([dataAlias,endpoint,token],fetcher,{
         enabled: !token,
         staleTime: 60000,
     });

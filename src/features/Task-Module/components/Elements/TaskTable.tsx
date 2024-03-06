@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Badge, Tooltip, Progress, Popconfirm} from 'antd';
+import {Table, Badge, Tooltip, Progress, Popconfirm,notification} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import {Button} from "@/features/Task-Module/components/Elements/Button";
 import axios from 'axios';
@@ -78,8 +78,11 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
         setState((prevState: any) => ({ ...prevState, selectedTaskId: taskId }));
       };
     
-    const deleteTask = (taskId: string) => {
-        
+    const deleteTask = async (taskId: string) => {
+        const response = await axios.delete(`http://localhost:8000/api/v1/task-assignments/${taskId}`)
+        if (response.status === 200){
+            notification.success({message:"Task Deleted Successfully"})
+        }
     }
 
     const columns: ColumnsType<Task> = [
@@ -139,14 +142,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             title: 'Assigned To',
             dataIndex: 'taskAssigneeName',
             width: 200,
-            fixed:'left',
+           
             align: 'left',
         },
         {
             title: 'Assigned By',
             dataIndex: 'taskAssignerName',
             width: 200,
-            fixed:'left',
+            
             align: 'left',
         },
         {
@@ -188,7 +191,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
             fixed:'right',
             align: 'center',
             width: 150,
-            render: (text, record, index) =>(<DeleteTaskButton onClick={() => handleTaskClick(record.taskAssignmentId.toString())}/>)
+            render: (text, record, index) =>(<DeleteTaskButton onClick={() => deleteTask(record.taskAssignmentId.toString())}/>)
         }
     ];
     const getStatus = (progress: string) => {

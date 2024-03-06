@@ -1,13 +1,32 @@
-import React from 'react'
-import TaskTable from '../Elements/TaskTable'
-import { useTaskAPI } from '../../hooks/useTaskAPI'
-import { useTaskContext } from '../../stores/TaskContext'
+import React from "react";
+import TaskTable from "../Elements/TaskTable";
+import { useTaskContext } from "../../stores/TaskContext";
+import { Spinner } from "@/components/Elements";
+import { Skeleton } from "antd";
 
 export const DataGrid = () => {
-    const task = useTaskContext()
+  const taskContext = useTaskContext();
+
+  React.useEffect(() => {
+    taskContext.refetchTasks();
+  }, []);
+
+  if (taskContext.isLoadingGettingTasks) {
+    return <Spinner size="xl" />;
+  }
+
   return (
     <>
-    <TaskTable tasks={task.Tasks} yScroll={5000} pageSize={3000} setState={undefined} />
+      {taskContext.isLoadingGettingTasks ? (
+        <Skeleton active />
+      ) : (
+        <TaskTable
+          tasks={taskContext.Tasks}
+          yScroll={5000}
+          pageSize={3000}
+          setState={undefined}
+        />
+      )}
     </>
-  )
-}
+  );
+};

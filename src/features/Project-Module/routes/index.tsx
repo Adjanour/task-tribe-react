@@ -6,6 +6,7 @@ export const ProjectRoutes = () => {
   return (
     <Routes>
       <Route path="all" element={<ProjectCreatePage />} />
+      <Route path="my" element={<ProjectCreatePage />} />
       <Route
         path="/:projectId"
         element={<ProjectPage />} 

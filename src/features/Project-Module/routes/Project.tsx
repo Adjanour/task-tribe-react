@@ -12,7 +12,7 @@ import TeamTable from "@/features/Team-Module/components/Elements/TeamTable";
 import { useParams } from 'react-router-dom';
 
 export const defaultProject: Project = {
-    projectId: 1,
+    projectId: 2,
     projectName: 'Sample Project',
     projectStartDate: '2024-01-01',
     projectEndDate: '2024-12-31',
@@ -25,7 +25,7 @@ export const ProjectPage = () => {
     const params = useParams();
     const projects = useGetData({ dataAlias: 'team', endpoint: 'http://localhost:8000/api/v1/projects/', token: '' });
     const teamDetails = useGetData({dataAlias:"teamDetails",endpoint:"http://localhost:8000/api/v1/team-details/",token:""})
-    const team = useGetData({dataAlias:"team",endpoint:`http://localhost:8000/api/v1/teams/${params.projectId}`,token:""})
+    const team = useGetData({dataAlias:"team",endpoint:`http://localhost:8000/api/v1/project-teams/${params.projectId}`,token:""})
 
     const [state, setState] = useState({
         selectedProjectId: '1',

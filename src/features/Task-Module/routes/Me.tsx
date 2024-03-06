@@ -152,17 +152,7 @@ import { PlusOutlined, EditOutlined } from "@ant-design/icons";
 // Defining TaskMePage component
 const TaskMePage = () => {
   // Using the useTaskAPI hook to fetch tasks and manage task-related data
-  const {
-    task,
-    refetchTasks,
-    createTask,
-    createAndAssignTask,
-    addTaskUpdate,
-    assignTask,
-    isPosting,
-    TaskUpdateError,
-    postError,
-  } = useTaskAPI();
+  const { task, refetchTasks } = useTaskAPI();
   const { Tasks, isLoadingGettingTasks } = task;
 
   // State to hold filtered tasks for the current user
@@ -171,7 +161,7 @@ const TaskMePage = () => {
   // Effect to refetch tasks when the component mounts or when Tasks state changes
   useEffect(() => {
     refetchTasks();
-  }, [Tasks]);
+  }, []);
 
   // Effect to filter tasks for the current user when Tasks state changes
   useEffect(() => {
@@ -210,13 +200,13 @@ const TaskMePage = () => {
     taskUpdates: [],
     pageState: 0,
   });
-  useEffect(() => {
-    task.refetchTasks();
-  }, [task]);
+  // useEffect(() => {
+  //   task.refetchTasks();
+  // }, [task]);
 
-          const handlePageChange = (newPageState:number) => {
-            setState({...state,pageState:newPageState})
-        }
+  const handlePageChange = (newPageState: number) => {
+    setState({ ...state, pageState: newPageState });
+  };
 
   // Rendering TaskMePage component
   return (
@@ -263,7 +253,7 @@ const TaskMePage = () => {
                   {state.pageState === 0 && <TaskCreateForm />}
                   {state.pageState === 1 && <TaskAssignForm />}
                   {state.pageState === 2 && (
-                    <TaskUpdateForm taskId={"1"} refetchData={refetchTasks} />
+                    <TaskUpdateForm taskId={state.selectedTaskId} refetchData={refetchTasks} />
                   )}
                 </>
               )}

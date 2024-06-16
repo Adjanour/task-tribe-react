@@ -37,29 +37,14 @@ export const List: React.FC = () => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over) {
-      const updateTaskStatus2 = Tasks.map((task:Task) => {
-        if (task.taskAssignmentId === Number(active.id)) {
-          console.log("task assignment id");
-          console.log(task.taskAssignmentId);
-          console.log(over);
-          const response = updateTaskStatus({taskId:task.taskAssignmentId,taskStatusId:+over.id.toString()})
-          response.then((data)=>console.log("response from update call"))
-          .then((response)=>console.log(response))
-          refetchTasks();
-        }
-        return task;
-      });
-      // const updatedTasks = Tasks.map((task:Task) => {
-      //   if (task.taskAssignmentId === Number(active.id)) {
-      //     return { ...task, taskStatus: over.id };
-      //   }
-      //   return task;
-      // });
-      // setFilteredTasks({
-      //   notStarted: updatedTasks.filter((task: Task) => task.taskStatus === "Not Started"),
-      //   inProgress: updatedTasks.filter((task: Task) => task.taskStatus === "In Progress"),
-      //   done: updatedTasks.filter((task: Task) => task.taskStatus === "Completed"),
-      // });
+      if (Tasks.some((task:Task) => task.taskAssignmentId === Number(active.id))) {
+        updateTaskStatus({taskId: Number(active.id), taskStatusId: Number(over.id)})
+          .then(() => {
+            console.log("Task status updated successfully");
+            refetchTasks();
+          })
+          .catch(error => console.error("Failed to update task status", error));
+      }
     }
   };
 

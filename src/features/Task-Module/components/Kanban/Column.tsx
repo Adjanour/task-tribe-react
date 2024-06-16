@@ -38,6 +38,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, id, count, children 
         flexDirection: "column",
         padding: "0 16px",
         maxWidth: "600px",
+        maxHeight:"750px"
       }}
       className="w-full"
     >

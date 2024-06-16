@@ -161,7 +161,7 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
         },
         {
             title: 'End Date',
-            dataIndex: 'taskEndDate',
+            dataIndex: 'taskDueDate',
             width: 150,
             align: 'left',
             render: (date) => formatDate(date),

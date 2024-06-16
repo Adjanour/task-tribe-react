@@ -11,8 +11,8 @@ interface TaskProgressUpdateFormProps {
 
 export interface State {
   percent: number | null;
-  statusData: UserValue;
-  taskData: UserValue;
+  statusData: UserValue|undefined;
+  taskData: UserValue|undefined;
   startDate: string;
   endDate: string;
   loading: boolean;

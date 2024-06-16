@@ -1,6 +1,6 @@
 import {axios}  from '@/lib/axios';
 import {message} from "antd";
-import {TaskData, TaskPostData, TaskPutData} from "@/features/Task-Module/types";
+import {TaskData, TaskPostData, TaskPutData, TaskStatusUpdate} from "@/features/Task-Module/types";
 import {processDateString} from "@/features/Task-Module/utils/format";
 import {usePostData} from "@/features/Task-Module/hooks/usePostData";
 import {useGetData} from "@/hooks/useGetData";
@@ -72,6 +72,10 @@ export const useTaskAPI = () => {
             return message.error(`Error creating and assigning task ${e}`);
         }
     };
+    const {postData:postTaskStatusUpdate,postError:TaskStatusUpdateError} = usePostData({
+        endpoint:'http://localhost:8000/api/v1/task/status/update',
+        token:Token
+    })
     const { postData:postTaskUpdate,postError:TaskUpdateError } = usePostData({
         endpoint: 'http://localhost:8000/api/v1/task-updates/',
         token: Token
@@ -139,9 +143,14 @@ export const useTaskAPI = () => {
             taskUpdateTitle,
             taskUpdateChallenge,
             taskUpdateDetails,
+            taskUpdateStatusId,
+            taskId,
             // taskUpdateUser,
             taskUpdateProgress
         } = newUpdate;
+
+
+       
     
         // Validate taskUpdateTaskId
         if (!taskUpdateTaskAssignmentId) {
@@ -150,7 +159,10 @@ export const useTaskAPI = () => {
     
         // Convert taskUpdateTaskId to a number
         const taskAssignmentId = typeof taskUpdateTaskAssignmentId === 'object' ? taskUpdateTaskAssignmentId.value : +taskUpdateTaskAssignmentId;
-    
+
+        const updateResponse = await updateTaskStatus({"taskId":taskAssignmentId,"taskStatusId":taskUpdateStatusId});
+        console.log(updateResponse);
+
         // Create the data object
         const data = {
             taskUpdateTaskAssignmentId: taskAssignmentId,
@@ -166,7 +178,12 @@ export const useTaskAPI = () => {
         
         return response;
     };
-    
+   
+    const updateTaskStatus = async (newStatus:TaskStatusUpdate)=>{
+        const response = await postTaskStatusUpdate(newStatus)
+
+        return response.message
+    }
 
     const {data:Tasks, refetchData: refetchTasks, isLoading:isLoadingGettingTasks, error:errorFetchingTasks} = useGetData({
             dataAlias: "task",
@@ -180,7 +197,7 @@ export const useTaskAPI = () => {
         errorFetchingTasks
     }
 
-    return {task,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,isPosting,TaskUpdateError,postError }
+    return {task,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,updateTaskStatus,isPosting,TaskUpdateError,postError }
 }
 
 

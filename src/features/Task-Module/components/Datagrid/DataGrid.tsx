@@ -23,7 +23,7 @@ export const DataGrid = () => {
         <TaskTable
           tasks={taskContext.Tasks}
           yScroll={5000}
-          pageSize={3000}
+          pageSize={50}
           setState={undefined}
         />
       )}

@@ -21,7 +21,7 @@ export const Dashboard = () => {
   //Extracting task count, completed tasks, not started tasks and pending tasks
   const totalTasks = task.Tasks?.length;
   const completedTasks = task.Tasks?.filter(
-    (task: Task) => task.taskStatus?.toString().toLowerCase() === "ended"
+    (task: Task) => task.taskStatus?.toString().toLowerCase() === "completed"
   ).length;
   const pendingTasks = totalTasks - completedTasks;
   const notStartedTasks: number = task.Tasks?.filter(
@@ -38,8 +38,8 @@ export const Dashboard = () => {
     },
     {
       title: "Assignee",
-      dataIndex: "fullName",
-      key: "fullName",
+      dataIndex: "taskAssigneeName",
+      key: "taskAssigneeName",
     },
     {
       title: "Status",
@@ -54,17 +54,17 @@ export const Dashboard = () => {
     },
   ];
 
-  const taskTableData = task.Tasks?.slice(-20); // Displaying only the first 5 tasks
+  const taskTableData = task.Tasks?.slice(-20); // Displaying only the first 20 tasks
 
   return (
     <>
       {task.isLoadingGettingTasks ? (
         <Skeleton active />
       ) : (
-        <div>
+        <div className="w-full">
           {/* Task Overview Section */}
-          <Row gutter={20} style={{ justifyContent: "center" }}>
-            <Col span={5}>
+          <Row gutter={22} style={{ justifyContent: "evenly" }} className="mt-4">
+            <Col span={6}>
               <Card>
                 <Statistic
                   prefix={
@@ -77,7 +77,7 @@ export const Dashboard = () => {
                 />
               </Card>
             </Col>
-            <Col span={5}>
+            <Col span={6}>
               <Card>
                 <Statistic
                   title="Completed Tasks"
@@ -87,8 +87,8 @@ export const Dashboard = () => {
                 />
               </Card>
             </Col>
-            <Col span={5}>
-              <Card>
+            <Col span={6}>
+              <Card className="justify-center">
                 <Statistic
                   prefix={
                     <LoadingOutlined
@@ -100,7 +100,7 @@ export const Dashboard = () => {
                 />
               </Card>
             </Col>
-            <Col span={5}>
+            <Col span={6}>
               <Card>
                 <Statistic
                   title="Not Started"

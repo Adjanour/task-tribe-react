@@ -29,17 +29,17 @@ const NavbarItem = ({ item }: NavbarItemProps) => {
 
 function Navbar() {
   return (
-    <div className="nav shadow-md bg-white dark:bg-black gap-1">
+    <div className="nav shadow-md hidden bg-white dark:bg-black gap-1  lg:flex">
       {NavItems &&
         NavItems.map((item, index) => <NavbarItem key={index} item={item} />)}
-      <div className="bg-blue-500 text-white h-fit  rounded-md shadow-md dark:bg-white dark:text-black p-1 w-fit flex flex-row text-md text-1xl  md:hidden lg:block">
+      <div className="bg-blue-500 text-white h-fit hidden rounded-md shadow-md dark:bg-white dark:text-black p-1 w-fit sm:flex md:flex lg:flex sm:flex-row lg:flex-row md:flex-row text-md text-1xl ">
         <Clock />
       </div>
       <div>
         <SearchBar />
       </div>
-      <div className="rounded-full w-[32px] h-[32px] aspect-auto circle">
-        <img src={image} alt="profile" className="w-full h-full object-cover rounded-full" />
+      <div className="w-fit">
+        <img src={image} alt="profile" className="w-8 h-8 rounded-lg" />
       </div>
     </div>
   );

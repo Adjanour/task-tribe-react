@@ -10,10 +10,15 @@ import TaskTable from "@/features/Task-Module/components/Elements/TaskTable";
 import { TaskAssignForm } from "../components/Elements/TaskForm/TaskAssignForm";
 import { TaskUpdateForm } from "../components/Elements/TaskForm/TaskUpdateForm";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
+import useAuth from "@/hooks/useAuth";
+import storage from "@/utils/storage";
+import { AuthUser } from "@/features/auth";
+import { fetchTaskUpdates } from "../utils/functions";
 
 // Defining TaskMePage component
 const TaskMePage = () => {
   // Using the useTaskAPI hook to fetch tasks and manage task-related data
+  const {user} = useAuth();
   const { task, refetchTasks } = useTaskAPI();
   const { Tasks, isLoadingGettingTasks } = task;
 
@@ -39,7 +44,16 @@ const TaskMePage = () => {
 
   // Function to get the current user ID (for demo purposes)
   const getCurrentUserId = () => {
-    return 1;
+    if(storage.getUser()){
+      const user: AuthUser =  storage.getUser();
+      console.log("returned user from local storage")
+      return user.id;
+
+    }
+    if(user){
+      console.log("returned user")
+      return user.id
+    }
   };
 
   const [state, setState] = useState({
@@ -62,9 +76,31 @@ const TaskMePage = () => {
     taskUpdates: [],
     pageState: 0,
   });
-  // useEffect(() => {
-  //   task.refetchTasks();
-  // }, [task]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+          const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
+          setState({ ...state, taskUpdates: taskUpdates });
+        } catch (error) {
+          console.error("Error fetching task updates:", error);
+        }
+      };
+  
+      fetchData();
+    }, [state.selectedTaskId]);
+  
+    const refetchData = async () => {
+      try {
+        const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
+        setState({ ...state, taskUpdates: taskUpdates });
+        task.refetchTasks()
+      } catch (error) {
+        console.error("Error refetching task updates:", error);
+      }
+    };
+
+
 
   const handlePageChange = (newPageState: number) => {
     setState({ ...state, pageState: newPageState });
@@ -115,7 +151,7 @@ const TaskMePage = () => {
                   {state.pageState === 0 && <TaskCreateForm />}
                   {state.pageState === 1 && <TaskAssignForm />}
                   {state.pageState === 2 && (
-                    <TaskUpdateForm taskId={state.selectedTaskId} refetchData={refetchTasks} />
+                    <TaskUpdateForm taskId={state.selectedTaskId} refetchData={refetchData} />
                   )}
                 </>
               )}

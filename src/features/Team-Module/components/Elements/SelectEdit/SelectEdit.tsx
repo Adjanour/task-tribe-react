@@ -4,7 +4,7 @@ import type { SelectProps } from 'antd/es/select';
 
 interface SelectEditProps<ValueType = any>
     extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
-    fetchOptions: () => Promise<ValueType[]>;
+    fetchOptions: () => Promise<ValueType[]|undefined>;
     placeholder:string;
 }
 
@@ -12,7 +12,7 @@ export function SelectEdit<ValueType extends { key?: string; label: React.ReactN
     { placeholder,fetchOptions, ...props }: SelectEditProps<ValueType>,
 )
 {
-    const [data,setData]=useState<ValueType[]>([])
+    const [data,setData]=useState<ValueType[]|undefined>([])
 
     useEffect(()=>{
         fetchOptions().then((data)=>setData(data))

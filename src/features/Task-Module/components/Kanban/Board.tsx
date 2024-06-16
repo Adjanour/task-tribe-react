@@ -1,28 +1,31 @@
-import { DndContext } from '@dnd-kit/core'
-import React from 'react'
+import { DndContext } from '@dnd-kit/core';
+import React from 'react';
 
-export const KanbanBoardContainer = ({children}:React.PropsWithChildren) => {
-  return (
-    <div
-    >
-        <div style={{
-            width: '100%',
-            display: 'flex',
-            height: '100%',
-            overflow: 'scroll',
-            padding: '32px',
-        }} className='rounded-md shadow-md bg-white mx-auto justify-between p-2 h-full'>
-            {children}
-        </div>
-
-    </div>
-  )
+interface PropsWithChildren {
+  children: React.ReactNode;
 }
 
-export const KanbanBoard = ({children}:React.PropsWithChildren) => {
+export const KanbanBoardContainer: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div style={{ width: '100%', height: '100%', overflow: 'auto', padding: '32px' }}>
+      <div
+        className='rounded-md shadow-md bg-white mx-auto grid grid-cols-3 p-2 h-full'
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '16px',
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export const KanbanBoard: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <DndContext>
-        {children}
+      {children}
     </DndContext>
-  )
-}
+  );
+};

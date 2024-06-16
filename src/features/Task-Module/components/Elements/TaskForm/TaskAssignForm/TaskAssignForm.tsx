@@ -10,16 +10,16 @@ type description = {
   }
 
 type stateTypes ={
-    statusData: UserValue;
-    taskData: UserValue;
+    statusData: UserValue|undefined;
+    taskData: UserValue|undefined;
     startDate: string;
     endDate: string;
     loading: boolean;
     taskId: UserValue|UserValue[]|any;
-    priorityData: UserValue;
-    assigneesData: UserValue[];
-    assignerData: UserValue;
-    taskDescription: description
+    priorityData: UserValue|undefined;
+    assigneesData: UserValue[]|undefined;
+    assignerData: UserValue|undefined;
+    taskDescription: description|undefined
 }
 
 export const TaskAssignForm = () => {

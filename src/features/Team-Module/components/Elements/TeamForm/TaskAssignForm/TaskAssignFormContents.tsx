@@ -9,27 +9,27 @@ import { processDateString } from '@/features/Task-Module/utils/format'
 export type TaskAssignFormContentsProps = {
     handleClearForm: () => void;
     state : {
-        statusData: UserValue;
-        taskData: UserValue;
+        statusData: UserValue|undefined;
+        taskData: UserValue|undefined;
         startDate: string;
         endDate: string;
         loading: boolean;
         taskId: UserValue|UserValue[]|any;
-        priorityData: UserValue;
-        assigneesData: UserValue[];
-        assignerData: UserValue;
-        taskDescription: {taskDescription:string}
+        priorityData: UserValue|undefined;
+        assigneesData: UserValue[]|undefined;
+        assignerData: UserValue|undefined;
+        taskDescription: {taskDescription:string}|undefined
     }
-    setState :  React.Dispatch<React.SetStateAction<{statusData: UserValue;
-    taskData: UserValue;
+    setState :  React.Dispatch<React.SetStateAction<{statusData: UserValue|undefined;
+    taskData: UserValue|undefined;
     startDate: string;
     endDate: string;
     loading: boolean;
     taskId: UserValue|UserValue[]|any;
-    priorityData: UserValue;
-    assigneesData: UserValue[];
-    assignerData: UserValue;
-    taskDescription: {taskDescription:string}}>>
+    priorityData: UserValue|undefined;
+    assigneesData: UserValue[]|undefined;
+    assignerData: UserValue|undefined;
+    taskDescription: {taskDescription:string}|undefined}>>
 }
 
 export const  TaskAssignFormContents = ({handleClearForm,setState,state}:TaskAssignFormContentsProps)=>{

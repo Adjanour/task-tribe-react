@@ -2,7 +2,7 @@
 import React from "react";
 import { DatePicker, Form,  InputNumber,  Progress, Select} from "antd";
 import { HolidayComponent } from "@/components/HolidayComponent/Holiday";
-import {fetchTaskAssignemnts, fetchTasks, fetchTaskStatuses} from "@/features/Task-Module/utils/functions";
+import {fetchTaskAssignments, fetchTasks, fetchTaskStatuses} from "@/features/Task-Module/utils/functions";
 import { SelectEdit } from "../../SelectEdit";
 import { TextAreaEdit } from "../../TextAreaEdit";
 import { InputEdit } from "../../InputEdit";
@@ -63,7 +63,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                 </td>
                 <td>
                     <Form.Item  name="taskUpdateTaskAssignmentId" rules={[{ required: true, message: 'Please select a task' }]} className='mb-1'>
-                        <SelectEdit mode="single" fetchOptions={fetchTaskAssignemnts} placeholder="Select task" />
+                        <SelectEdit mode="single" fetchOptions={fetchTaskAssignments} placeholder="Select task" />
                     </Form.Item>
                 </td>
                 <td className="flex float-right  items-center justify-center mt-1 ">
@@ -72,7 +72,7 @@ const TaskProgressUpdateFormContent = ({ state,setState }:TaskUpdateFormContentP
                     </label>
                 </td>
                 <td>
-                    <Form.Item className="mb-1"  name="currentStatus" rules={[{ required: true, message: 'Please select current status' }]}>
+                    <Form.Item className="mb-1"  name="taskUpdateStatusId" rules={[{ required: true, message: 'Please select current status' }]}>
                         <SelectEdit mode="single" fetchOptions={fetchTaskStatuses} placeholder="Select task status"/>
                     </Form.Item>
                 </td>

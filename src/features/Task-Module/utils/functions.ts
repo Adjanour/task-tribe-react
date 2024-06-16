@@ -1,10 +1,20 @@
-// dataFetchers.ts
-import {axios} from '@/lib/axios';
-import {Priority, Status, TaskUpdate} from "@/features/Task-Module/types";
+import { axios } from '@/lib/axios';
+import { Priority, Status, TaskUpdate } from "@/features/Task-Module/types";
 
 export interface UserValue {
     label: string;
     value: string;
+}
+
+/**
+ * Handles errors from API requests.
+ *
+ * @param error - The error object.
+ * @throws The provided error.
+ */
+const handleError = (error: any) => {
+    console.error("API request error:", error);
+    throw error;
 }
 
 /**
@@ -13,64 +23,81 @@ export interface UserValue {
  * @param param - The parameter to fetch the task status for.
  * @returns The task status value.
  */
-export async function fetchTaskStatus(param: string): Promise<UserValue> {
-    // Make a GET request to the API endpoint to fetch the task status
-    const res = await axios.get(`/api/v1/task-assignments/${param}`);
-
-    // Extract the task status and task status ID from the response data
-    const { taskStatus, taskStatusId } = res.data;
-
-    // Return the task status value
-    return { label: taskStatus, value: taskStatusId };
+export async function fetchTaskStatus(param: string): Promise<UserValue|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/task-assignments/${param}`);
+        const { taskStatus, taskStatusId } = res.data;
+        return { label: taskStatus, value: taskStatusId };
+    } catch (error) {
+        handleError(error);
+    }
 }
+
 /**
  * Fetches the task description for a given parameter.
  *
  * @param param - The parameter used to fetch the task description.
  * @returns A promise that resolves to an object containing the task description.
- * @throws An error if there is an issue fetching the task description.
  */
-export async function fetchTaskDescription(param: string): Promise<{taskDescription: string}> {
+export async function fetchTaskDescription(param: string): Promise<{ taskDescription: string }|undefined> {
     try {
-        // Make a GET request to the API endpoint with the provided parameter
         const res = await axios.get(`/api/v1/task-assignments/${param}`);
-
-        // Extract the task description from the response data
         const { taskDescription } = res.data;
-
-        // Return an object containing the task description
         return { taskDescription };
     } catch (error) {
-        // Log the error and throw it to the caller
-        console.error("Error fetching task description:", error);
-        throw error;
+        handleError(error);
     }
 }
-export async function fetchTaskAssigner(param: string): Promise<UserValue> {
-    const res = await axios.get(`/api/v1/task-assignments/${param}`);
-    const { taskAssignerName,taskAssignerUserId } = res.data[0];
-    return { label: taskAssignerName, value: taskAssignerUserId };
-}
-export async function fetchTaskAssignees(param: string): Promise<UserValue[]> {
-    const res = await axios.get(`api/v1/task-assignments/${param}`);
-    return res.data.map( ({taskAssigneeName,taskAssigneeUserId}:Task) => ({
-        label: taskAssigneeName, value: taskAssigneeUserId
-    }))
+
+export async function fetchTaskAssigner(param: string): Promise<UserValue|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/task-assignments/${param}`);
+        const { taskAssignerName, taskAssignerUserId } = res.data[0];
+        return { label: taskAssignerName, value: taskAssignerUserId };
+    } catch (error) {
+        handleError(error);
+    }
 }
 
-export async function fetchTask(param: string): Promise<UserValue> {
-    const res = await axios.get(`/api/v1/tasks/${param}`);
-    const { taskName, taskId } = res.data;
-    return { label: taskName, value: taskId };
+export async function fetchTaskAssignees(param: string): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/task-assignments/${param}`);
+        return res.data.map(({ taskAssigneeName, taskAssigneeUserId }: Task) => ({
+            label: taskAssigneeName,
+            value: taskAssigneeUserId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
 }
-export async function fetchTaskAssignment(param: string): Promise<UserValue> {
-    const res = await axios.get(`/api/v1/task-assignments/${param}`);
-    const { taskName, taskId } = res.data;
-    return {label: taskName, value: taskId};
+
+export async function fetchTask(param: string): Promise<UserValue|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/tasks/${param}`);
+        const { taskName, taskId } = res.data;
+        return { label: taskName, value: taskId };
+    } catch (error) {
+        handleError(error);
+    }
 }
-export async function fetchTaskUpdates(param: string): Promise<TaskUpdate[]|any> {
-    const res = await axios.get(`/api/v1/task-updates/${param}`);
-    return res.data
+
+export async function fetchTaskAssignment(param: string): Promise<UserValue|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/task-assignments/${param}`);
+        const { taskName, taskId } = res.data;
+        return { label: taskName, value: taskId };
+    } catch (error) {
+        handleError(error);
+    }
+}
+
+export async function fetchTaskUpdates(param: string): Promise<TaskUpdate[] | any> {
+    try {
+        const res = await axios.get(`/api/v1/task-updates/${param}`);
+        return res.data;
+    } catch (error) {
+        handleError(error);
+    }
 }
 
 export type Task = {
@@ -78,9 +105,9 @@ export type Task = {
     taskName: string;
     taskDescription: string;
     taskPriority: string;
-    taskPriorityId:number;
+    taskPriorityId: number;
     taskStatus: string;
-    taskStatusId:number;
+    taskStatusId: number;
     tkaAssignerId: number;
     taskStartDate: string;
     taskCreatedDate: string;
@@ -93,12 +120,13 @@ export type Task = {
     fullName: string;
     taskDuration: number;
     taskProgress: string;
-    taskAssigneeName:string;
-    taskAssigneeUserId:string;
-    taskAssignerName:string;
-    taskAssignerUserId:string;
+    taskAssigneeName: string;
+    taskAssigneeUserId: string;
+    taskAssignerName: string;
+    taskAssignerUserId: string;
     taskSlug: string | null;
 }
+
 export interface TaskAssignment {
     taskAssignmentId: number;
     taskId: number;
@@ -118,57 +146,79 @@ export interface TaskAssignment {
     taskAssigneeName: string;
     taskAssignerName: string;
 }
-export async function fetchTaskPriority(param:string): Promise<UserValue> {
-    const res = await axios.get(`/api/v1/tasks/${param}`)
-    const { taskPriority, taskPriorityId } = res.data;
-    return { label: taskPriority, value: taskPriorityId };
-}
-export async function fetchTasks(): Promise<UserValue[]> {
-    const res = await axios.get('/api/v1/tasks')
-    return res.data.map( ({taskId,taskName}:Task) => ({
-        label: `${taskName}`,
-        value: taskId,
-    }))
-}
-export async function fetchTaskAssignemnts(): Promise<UserValue[]> {
-    const res = await axios.get('/api/v1/task-assignments')
-    return res.data.map( ({taskAssignmentId,taskName}:TaskAssignment) => ({
-        label: `${taskName}`,
-        value: taskAssignmentId,
-    }))
-}
-export async function fetchTaskStatuses(): Promise<UserValue[]> {
 
-    const res = await axios.get('/api/v1/statuses/')
-    return res.data.map( ({statusId,statusName}:Status) => ({
-        label: `${statusName}`,
-        value: statusId,
-    }))
+export async function fetchTaskPriority(param: string): Promise<UserValue|undefined> {
+    try {
+        const res = await axios.get(`/api/v1/tasks/${param}`);
+        const { taskPriority, taskPriorityId } = res.data;
+        return { label: taskPriority, value: taskPriorityId };
+    } catch (error) {
+        handleError(error);
+    }
+}
 
+export async function fetchTasks(): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get('/api/v1/tasks');
+        return res.data.map(({ taskId, taskName }: Task) => ({
+            label: `${taskName}`,
+            value: taskId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
 }
-export async function fetchTaskPriorities(): Promise<UserValue[]> {
-    const res = await axios.get('api/v1/priorities/')
-    return res.data.map( ({priorityId,priorityName}:Priority) => ({
-        label: `${priorityName}`,
-        value: priorityId,
-    }))
+
+export async function fetchTaskAssignments(): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get('/api/v1/task-assignments');
+        return res.data.map(({ taskAssignmentId, taskName }: TaskAssignment) => ({
+            label: `${taskName}`,
+            value: taskAssignmentId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
 }
+
+export async function fetchTaskStatuses(): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get('/api/v1/statuses/');
+        return res.data.map(({ statusId, statusName }: Status) => ({
+            label: `${statusName}`,
+            value: statusId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
+}
+
+export async function fetchTaskPriorities(): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get('api/v1/priorities/');
+        return res.data.map(({ priorityId, priorityName }: Priority) => ({
+            label: `${priorityName}`,
+            value: priorityId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
+}
+
 /**
  * Fetches users from the API and returns an array of UserValue objects.
  * Each UserValue object contains the user's label and value.
  *
  * @returns {Promise<UserValue[]>} An array of UserValue objects.
  */
-export async function fetchUsers(): Promise<UserValue[]> {
-    const res = await axios.get('/api/v1/user-details/');
-
-    // Map the response data to create an array of UserValue objects
-    return res.data.map(({userId, userName}: {
-        userId: number,
-        userName:string,
-
-    }) => ({
-        label: userName,
-        value: userId,
-    }));
+export async function fetchUsers(): Promise<UserValue[]|undefined> {
+    try {
+        const res = await axios.get('/api/v1/user-details/');
+        return res.data.map(({ userId, userName }: { userId: number; userName: string }) => ({
+            label: userName,
+            value: userId,
+        }));
+    } catch (error) {
+        handleError(error);
+    }
 }

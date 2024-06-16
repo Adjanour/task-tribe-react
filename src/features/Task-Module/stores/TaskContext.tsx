@@ -14,7 +14,7 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     return <TaskContext.Provider value={task}>{children}</TaskContext.Provider>
 };
 
-export const useTaskContext = () => {
+export const useTaskContext =  () => {
     const context = useContext(TaskContext);
 
     if (!context) {

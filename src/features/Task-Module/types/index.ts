@@ -86,6 +86,7 @@ export type CustomDate = {
 }
 
 export type  TaskPutData ={
+    taskId?:number;
     taskUpdateTaskId:SelectComponentData|number;
     taskUpdateTitle:string;
     taskUpdateDescription:string;
@@ -93,6 +94,7 @@ export type  TaskPutData ={
     taskUpdateChallenge:string;
     taskUpdateProgress:number;
     taskUpdateDetails:string;
+    taskUpdateStatusId?:number;
     taskUpdateTaskAssignmentId:SelectComponentData|number;
 }
 export type TaskUpdate = {
@@ -104,3 +106,8 @@ export type TaskUpdate = {
     taskUpdateUserId: number;
     taskUpdateProgress: number;
 };
+
+export type TaskStatusUpdate = {
+    taskId : number;
+    taskStatusId?:number;
+}

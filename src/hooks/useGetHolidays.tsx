@@ -10,43 +10,60 @@ export type Holiday = {
     country: string; // The country where the holiday is observed.
     location?: string; // The specific location within the country where the holiday is observed (optional).
     type: string; // The type of the holiday (e.g., National, Public, Observance).
-    date: string; // The date of the holiday in format "DD/MM/YYYY".
+    date: string; // The date of the holiday in format "YYYY-MM-DD".
     date_year: string; // The year of the holiday.
     date_month: string; // The month of the holiday (numeric value).
     date_day: string; // The day of the holiday (numeric value).
     week_day: string; // The day of the week the holiday falls on.
 }
 
+const API_KEY = '7e488581-b5cf-4f4a-8332-0aba5f353c31'; // Ideally, keep API keys in environment variables
+
 export const fetchHolidays = async (startDate: string, endDate: string): Promise<Holiday[]> => {
     try {
-        // Make API request to get holiday data
-        const response = await Axios.get(`https://holidayapi.com/v1/holidays?pretty&key=7e488581-b5cf-4f4a-8332-0aba5f353c31&country=GH&year=2023&month=${startDate ? startDate.split('-')[1] : '12'}`);
-        const holidayData = response.data;
+        const year = new Date(startDate).getFullYear()-1;
+        const month = new Date(startDate).getMonth() + 1;
+        const response = await Axios.get(`https://holidayapi.com/v1/holidays`, {
+            params: {
+                key: API_KEY,
+                country: 'GH',
+                year,
+                month,
+                pretty: true,
+            },
+        });
 
-        // Transform holiday data into desired format
-        const holidays:Holiday[] = holidayData.holidays.map((holiday: Holiday, key: number) => ({
-            id: key,
+        const holidays: Holiday[] = response.data.holidays.map((holiday: any) => ({
             name: holiday.name,
+            name_local: holiday.name_local,
+            language: holiday.language,
+            description: holiday.description,
+            country: holiday.country,
+            location: holiday.location,
+            type: holiday.type,
             date: holiday.date,
+            date_year: holiday.date_year,
+            date_month: holiday.date_month,
+            date_day: holiday.date_day,
+            week_day: holiday.week_day,
         }));
 
         return holidays;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching holidays:', error);
         throw new Error('Error fetching holidays');
     }
-}
-// 22-02-05
-// Hook to fetch holidays
+};
+
 /**
  * Custom hook to fetch holidays between a start and end date.
- * @param start - The start date in string format.
- * @param end - The end date in string format.
+ * @param start - The start date in string format (YYYY-MM-DD).
+ * @param end - The end date in string format (YYYY-MM-DD).
  * @returns An array of holidays between the start and end date.
  */
 export const useGetHolidays = (start: string, end: string) => {
     const [holidays, setHolidays] = useState<Holiday[]>([]);
-
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         /**
@@ -57,22 +74,32 @@ export const useGetHolidays = (start: string, end: string) => {
                 const holidayData = await fetchHolidays(start, end);
                 setHolidays(holidayData);
             } catch (error) {
-                notification.error({message:`${error}`})
+                setError('There was an error fetching the holidays.');
+                notification.error({ message: `${error}` });
             }
         };
+
         if (start && end) {
-            try {
-                fetchHolidayData();
-            } catch (error) {
-                notification.error({message:"There was an error getting Holidays"})
-            }
-            
+            fetchHolidayData().catch((err) => {
+                notification.error({ message: "There was an error getting holidays" });
+            });
         }
     }, [start, end]);
-    
-    return holidays.filter(
-        (holiday) =>
-            holiday.date.split("-")[2] >= start.split("-")[2] &&
-            holiday.date.split("-")[2] <= end.split("-")[2]
+
+    // Filtering holidays within the date range
+    const filteredHolidays = holidays.filter(
+        (holiday) => {
+            const holidayDate = new Date(holiday.date).getFullYear();
+            const startDate = new Date(start).getFullYear()-1;
+            const endDate = new Date(end).getFullYear()-1;
+            return holidayDate >= startDate && holidayDate <= endDate;
+        }
     );
+    console.log(filteredHolidays)
+
+    if (error) {
+        notification.error({ message: error });
+    }
+
+    return filteredHolidays;
 };

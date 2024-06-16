@@ -38,18 +38,19 @@ const useAuth = () => {
   const navigate = useNavigate()
 
   const loadUser = async () => {
-    if (storage.getToken()) {
-      return await getUser();
-    }
-    return null;
+  
+      const user = await getUser();
+      storage.setUser(user)
+      setUser(user)
+      
+      return user
+  
   }
 
   const loginFn = async (data: LoginCredentialsDTO) => {
     const response = await loginWithEmailAndPassword(data);
-    console.log(response);
-    setUser(await loadUser());
-    console.log(user)
     await handleAuthResponse(response);
+    setUser(await loadUser());  
   }
 
   const signupFn = useCallback(async (data: SignupCredentialsDTO) => {

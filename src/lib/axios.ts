@@ -18,6 +18,7 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(authRequestInterceptor);
+
 // axios.interceptors.response.use(
 //     (response) => {
 //         return response.data;

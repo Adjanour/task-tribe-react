@@ -6,62 +6,66 @@ interface UsePostDataProps {
     token: string | null;
 }
 
+interface MutationOptions<TData, TVariables> {
+    onSuccess?: (data: TData) => void;
+    onError?: (error: any) => void;
+    retry?:number
+}
+
 /**
  * A hook for making POST and PUT requests to an API endpoint.
  *
  * @param {UsePostDataProps} props - An object containing the endpoint and token.
- * @returns {Object} An object containing the postData function, isPosting flag, and postError.
+ * @returns {Object} An object containing the postData function, isPosting flag, postError, putData function, isPutting flag, and putError.
  */
-export const usePostData = ({endpoint, token }: UsePostDataProps) => {
-
-    const mutation = useMutation(
-        async (postData: any) => {
-            const response = await axios.post(endpoint, postData, {
-                headers: {
-                    Authorization: token ? `Token ${token}` : '',
-                },
-            });
-            return response.data;
+export const usePostData = ({ endpoint, token }: UsePostDataProps) => {
+    const defaultHeaders = {
+        headers: {
+            Authorization: token ? `Token ${token}` : '',
         },
-        {
-            onSuccess: () => {
-
-            },
-            onError: () =>{
-            },
-            retry:3
-        },
-    );
-    const putMutation = useMutation(
-        async (putData:any)=>{
-            const response = await axios.put(endpoint,putData,{
-                headers:{
-                    Authorization: token ? `Token ${token}`:"",
-                }
-            })
-            return response.data;
-        },
-        {
-            onSuccess:()=>{
-
-            },
-            onError:()=>{
-
-            },
-            retry: 3
-        }
-    )
-
-
-    const postData = async (postData: any) => {
-        try {
-           const response =  await mutation.mutateAsync(postData);
-            return response
-        } catch (error) {
-            throw new Error()
-        }
-
     };
+
+    const mutationOptions: MutationOptions<any, any> = {
+        onSuccess: () => {
+            // Custom logic on success can be added here
+        },
+        onError: (error: any) => {
+            console.error('Request error:', error);
+        },
+        retry: 3,
+    };
+
+    const postMutation = useMutation(
+        async (postData: any) => {
+            const response = await axios.post(endpoint, postData, defaultHeaders);
+            return response.data;
+        },
+        mutationOptions
+    );
+
+    const putMutation = useMutation(
+        async (putData: any) => {
+            const response = await axios.put(endpoint, putData, defaultHeaders);
+            return response.data;
+        },
+        mutationOptions
+    );
+
+    /**
+     * Executes a POST request with the provided data.
+     *
+     * @param {any} postData - The data to be sent in the POST request.
+     * @returns {Promise<any>} A promise that resolves to the response of the POST request.
+     * @throws {Error} If an error occurs during the POST request.
+     */
+    const postData = async (postData: any): Promise<any> => {
+        try {
+            return await postMutation.mutateAsync(postData);
+        } catch (error) {
+            throw new Error('Error during POST request');
+        }
+    };
+
     /**
      * Executes a PUT request with the provided data.
      *
@@ -69,14 +73,20 @@ export const usePostData = ({endpoint, token }: UsePostDataProps) => {
      * @returns {Promise<any>} A promise that resolves to the response of the PUT request.
      * @throws {Error} If an error occurs during the PUT request.
      */
-    const putData = async (putData: any) => {
+    const putData = async (putData: any): Promise<any> => {
         try {
-            const response =  await putMutation.mutateAsync(putData);
-            return response
+            return await putMutation.mutateAsync(putData);
         } catch (error) {
-            throw new Error()
+            throw new Error('Error during PUT request');
         }
-
     };
-    return { postData, isPosting: mutation.isLoading, postError: mutation.error,putData,isPutting:putMutation.isLoading,putError:putMutation.error };
+
+    return {
+        postData,
+        isPosting: postMutation.isLoading,
+        postError: postMutation.error,
+        putData,
+        isPutting: putMutation.isLoading,
+        putError: putMutation.error,
+    };
 };

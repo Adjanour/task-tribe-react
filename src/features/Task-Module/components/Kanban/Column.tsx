@@ -1,7 +1,8 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useDroppable } from "@dnd-kit/core";
 import { Card, Button, Modal, Form, Input, DatePicker, Space, Badge } from "antd";
-import React, { Children, useState } from "react";
+import React, { useState } from "react";
+import { TaskCreateForm } from "../Elements/TaskForm";
 
 interface Task {
   title: string;
@@ -10,26 +11,24 @@ interface Task {
 }
 
 interface KanbanColumnProps {
-  children: React.PropsWithChildren
+  title: string;
+  id: string;
+  count?: number;
+  children: React.ReactNode;
 }
 
-const KanbanColumn = ( {children}: React.PropsWithChildren) => {
+const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, id, count, children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const { isOver, setNodeRef, active } = useDroppable({
-    id: "",
-    data: {},
+  const { isOver, setNodeRef } = useDroppable({
+    id,
   });
 
   const handleAddTask = (values: Task) => {
     setTasks([...tasks, values]);
     setIsModalVisible(false);
   };
-
-  const count = 2
-  const description = 'Description of the task'
-  const title = 'Task Title'
 
   return (
     <div
@@ -38,43 +37,52 @@ const KanbanColumn = ( {children}: React.PropsWithChildren) => {
         display: "flex",
         flexDirection: "column",
         padding: "0 16px",
-        maxWidth: "300px", // Example of limiting column width
+        maxWidth: "600px",
+        maxHeight:"750px"
       }}
+      className="w-full"
     >
       <div style={{ padding: "12px" }}>
         <Space className="w-full justify-between">
           <Space>
-              <h2 className="">TO DO</h2>
-              {!!count && <Badge count={count} color="cyan"/> }
+            <h2>{title}</h2>
+            {count !== undefined && <Badge count={count} color="cyan" />}
           </Space>
           <Button
-          shape="circle"
-          icon={<PlusCircleOutlined />}
-          onClick={() => setIsModalVisible(true)}
+            shape="circle"
+            icon={<PlusCircleOutlined />}
+            onClick={() => setIsModalVisible(true)}
           />
-
         </Space>
-          {description}
       </div>
       <div
-      style={{
-        flex: 1,
-        overflowY: active ? "unset": "scroll",
-        border: '2px dashed transparent',
-        borderColor: isOver ? '#0000':'transparent',
-        borderRadius: '4px',
-      }}
+        style={{
+          flex: 1,
+          overflowY: isOver ? "unset" : "scroll",
+          border: '2px dashed transparent',
+          borderColor: isOver ? '#000' : 'transparent',
+          borderRadius: '4px',
+        }}
       >
         <div
-        style={{
-          marginBottom: "12px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-        }}>
+          style={{
+            marginBottom: "12px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+          }}
+        >
           {children}
         </div>
       </div>
+      <Modal
+        title="Add Task"
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        <TaskCreateForm/>
+      </Modal>
     </div>
   );
 };
@@ -93,9 +101,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ onFinish }) => {
         <Input.TextArea placeholder="Description" />
       </Form.Item>
       <Form.Item name="dueDate">
-        <DatePicker placeholder="Due Date" />
+        <DatePicker placeholder="Due Date" style={{ width: '100%' }} />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
+      <Button type="default" htmlType="submit" block>
         Add Task
       </Button>
     </Form>
@@ -116,3 +124,4 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
 };
 
 export default KanbanColumn;
+export { TaskCard };

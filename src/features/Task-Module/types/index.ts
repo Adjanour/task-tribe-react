@@ -17,6 +17,20 @@ export type User = {
     username: string;
 }
 
+export type UserProfile = {
+  id: number;
+  last_login: Date;
+  email: string;
+  userName: string;
+  firstName: string;
+  otherName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  isActive: boolean;
+  fullName: string;
+  profileImage: string;
+}
+
 export type Task = {
     taskId: number;
     taskName: string;

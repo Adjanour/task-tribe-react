@@ -5,6 +5,7 @@ import {processDateString} from "@/features/Task-Module/utils/format";
 import {usePostData} from "@/features/Task-Module/hooks/usePostData";
 import {useGetData} from "@/hooks/useGetData";
 import storage from "@/utils/storage";
+import { AuthUser } from '@/features/auth';
 
 
 /**
@@ -15,6 +16,7 @@ import storage from "@/utils/storage";
 export const useTaskAPI = () => {
     // Retrieve token from local storage
    const Token = storage.getToken()
+   const User:AuthUser = storage.getUser()
 
     /**
      * Creates and assigns a task.
@@ -137,6 +139,16 @@ export const useTaskAPI = () => {
         }
     };
 
+    const updateTaskStatus = async (newStatus:TaskStatusUpdate)=>{
+            const response = await postTaskStatusUpdate(newStatus)
+        
+            if (response.status === 200) {
+            return response.message;
+            } else {
+            throw new Error('Failed to update task status');
+            }
+        }
+
     const addTaskUpdate = async (newUpdate: TaskPutData) => {
         const {
             taskUpdateTaskAssignmentId,
@@ -144,7 +156,6 @@ export const useTaskAPI = () => {
             taskUpdateChallenge,
             taskUpdateDetails,
             taskUpdateStatusId,
-            taskId,
             // taskUpdateUser,
             taskUpdateProgress
         } = newUpdate;
@@ -160,8 +171,7 @@ export const useTaskAPI = () => {
         // Convert taskUpdateTaskId to a number
         const taskAssignmentId = typeof taskUpdateTaskAssignmentId === 'object' ? taskUpdateTaskAssignmentId.value : +taskUpdateTaskAssignmentId;
 
-        const updateResponse = await updateTaskStatus({"taskId":taskAssignmentId,"taskStatusId":taskUpdateStatusId});
-        console.log(updateResponse);
+        
 
         // Create the data object
         const data = {
@@ -170,26 +180,32 @@ export const useTaskAPI = () => {
             taskUpdateTitle,
             taskUpdateProgress,
             taskUpdateDetails,
-            taskUpdateUserId: 1 // Assuming a default value
+            taskUpdateUserId: User.id // Assuming a default value
         };
     
         // Call the API to post the task update
         const response = await postTaskUpdate(data);
         
+        const updateResponse = await updateTaskStatus({"taskId":taskAssignmentId,"taskStatusId":taskUpdateStatusId});
+        console.log(updateResponse);
+        
         return response;
     };
    
-    const updateTaskStatus = async (newStatus:TaskStatusUpdate)=>{
-        const response = await postTaskStatusUpdate(newStatus)
-
-        return response.message
-    }
+    
 
     const {data:Tasks, refetchData: refetchTasks, isLoading:isLoadingGettingTasks, error:errorFetchingTasks} = useGetData({
             dataAlias: "task",
             endpoint: "http://localhost:8000/api/v1/task-assignments/",
             token: Token,
     });
+
+    const {data:MyTasks, refetchData: refetchMyTasks, isLoading:isLoadingMyTasks, error:errorFetchingMyTasks} = useGetData({
+            dataAlias: "myTask",
+            endpoint: "http://localhost:8000/api/v1/task-assignments/user/",
+            token: Token,
+    });
+
     const task = {
         Tasks,
         refetchTasks,
@@ -197,7 +213,14 @@ export const useTaskAPI = () => {
         errorFetchingTasks
     }
 
-    return {task,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,updateTaskStatus,isPosting,TaskUpdateError,postError }
+    const myTask = {
+        MyTasks,
+        refetchMyTasks,
+        isLoadingMyTasks,
+        errorFetchingMyTasks
+    }
+
+    return {task,myTask,refetchTasks,createTask,createAndAssignTask,addTaskUpdate,assignTask,updateTaskStatus,MyTasks,refetchMyTasks,isLoadingMyTasks,errorFetchingMyTasks,isPosting,TaskUpdateError,postError }
 }
 
 

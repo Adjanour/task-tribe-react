@@ -204,9 +204,9 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks,yScroll,pageSize,setState }
         }
       };
     const formatDate = (date: string) => {
-        console.log(date)
+       
         const newDate = new Date(date);
-        console.log(newDate)
+        
         return newDate.toLocaleDateString('en-GB', {
             weekday: 'short',
             day: 'numeric',

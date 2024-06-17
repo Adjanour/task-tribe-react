@@ -13,7 +13,7 @@ const KanbanItem: React.FC<React.PropsWithChildren<Props>> = ({ children, id, da
   });
 
   return (
-    <div className="relative">
+    <div className="relative kanban-item p-4 mb-4 bg-white rounded-lg shadow">
       <div ref={setNodeRef} {...attributes} {...listeners}
         style={{
           opacity: active ? (active.id === id ? 1 : 0.5) : 1,
@@ -22,7 +22,7 @@ const KanbanItem: React.FC<React.PropsWithChildren<Props>> = ({ children, id, da
           position: "relative",
           cursor: "grab",
           fill:"#f3f3f3",
-          backgroundColor:"#f2f2f2"
+          backgroundColor:"#f9f9f9"
         }}
       >
         {children}

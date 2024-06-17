@@ -10,21 +10,23 @@ import {
 } from "@ant-design/icons";
 import { Task } from "../../types";
 import { useTaskContext } from "@/features/Task-Module/stores/TaskContext";
+import { useTaskAPI } from "../../hooks/useTaskAPI";
 
 export const Dashboard = () => {
-  const task = useTaskContext();
+  // const task = useTaskContext();
+  const { MyTasks, refetchMyTasks,isLoadingMyTasks } = useTaskAPI();
 
   useEffect(() => {
-    task.refetchTasks();
+    refetchMyTasks()
   }, []);
 
   //Extracting task count, completed tasks, not started tasks and pending tasks
-  const totalTasks = task.Tasks?.length;
-  const completedTasks = task.Tasks?.filter(
+  const totalTasks = MyTasks?.length;
+  const completedTasks = MyTasks?.filter(
     (task: Task) => task.taskStatus?.toString().toLowerCase() === "completed"
   ).length;
   const pendingTasks = totalTasks - completedTasks;
-  const notStartedTasks: number = task.Tasks?.filter(
+  const notStartedTasks: number = MyTasks?.filter(
     (task: Task) => task.taskStatus?.toString().toLowerCase() === "not started"
   ).length;
 
@@ -54,11 +56,11 @@ export const Dashboard = () => {
     },
   ];
 
-  const taskTableData = task.Tasks?.slice(-20); // Displaying only the first 20 tasks
+  const taskTableData = MyTasks?.slice(-20); // Displaying only the first 20 tasks
 
   return (
     <>
-      {task.isLoadingGettingTasks ? (
+      {isLoadingMyTasks ? (
         <Skeleton active />
       ) : (
         <div className="w-full">

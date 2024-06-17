@@ -42,7 +42,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, id, count, children 
       }}
       className="w-full"
     >
-      <div style={{ padding: "12px" }}>
+      <div style={{ padding: "15px" }}>
         <Space className="w-full justify-between">
           <Space>
             <h2>{title}</h2>
@@ -62,6 +62,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, id, count, children 
           border: '2px dashed transparent',
           borderColor: isOver ? '#000' : 'transparent',
           borderRadius: '4px',
+          padding:'15px'
         }}
       >
         <div

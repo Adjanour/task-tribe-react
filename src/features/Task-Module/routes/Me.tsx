@@ -18,43 +18,15 @@ import { fetchTaskUpdates } from "../utils/functions";
 // Defining TaskMePage component
 const TaskMePage = () => {
   // Using the useTaskAPI hook to fetch tasks and manage task-related data
-  const {user} = useAuth();
-  const { task, refetchTasks } = useTaskAPI();
-  const { Tasks, isLoadingGettingTasks } = task;
-
-  // State to hold filtered tasks for the current user
-  const [filteredTasks, setFilteredTasks] = useState([]);
+  const user:AuthUser = storage.getUser()
+  const { MyTasks, refetchMyTasks,isLoadingMyTasks } = useTaskAPI();
+  
 
   // Effect to refetch tasks when the component mounts or when Tasks state changes
   useEffect(() => {
-    refetchTasks();
+    refetchMyTasks();
   }, []);
 
-  // Effect to filter tasks for the current user when Tasks state changes
-  useEffect(() => {
-    // Check if tasks have been fetched
-    if (Tasks) {
-      // Filter tasks for the current user
-      const currentUserTasks = Tasks.filter(
-        (task: any) => task.taskAssigneeUserId === getCurrentUserId()
-      );
-      setFilteredTasks(currentUserTasks);
-    }
-  }, [Tasks]);
-
-  // Function to get the current user ID (for demo purposes)
-  const getCurrentUserId = () => {
-    if(storage.getUser()){
-      const user: AuthUser =  storage.getUser();
-      console.log("returned user from local storage")
-      return user.id;
-
-    }
-    if(user){
-      console.log("returned user")
-      return user.id
-    }
-  };
 
   const [state, setState] = useState({
     selectedTaskId: "0",
@@ -94,7 +66,7 @@ const TaskMePage = () => {
       try {
         const taskUpdates = await fetchTaskUpdates(state.selectedTaskId);
         setState({ ...state, taskUpdates: taskUpdates });
-        task.refetchTasks()
+        refetchMyTasks()
       } catch (error) {
         console.error("Error refetching task updates:", error);
       }
@@ -144,7 +116,7 @@ const TaskMePage = () => {
                   <p className="text-2xl">Task Progress Update</p>
                 )}
               </div>
-              {task.isLoadingGettingTasks ? (
+              {isLoadingMyTasks ? (
                 <Skeleton active />
               ) : (
                 <>
@@ -165,7 +137,7 @@ const TaskMePage = () => {
                 <p className="text-2xl">Task Updates</p>
               </div>
               {/* Conditionally rendering task update table */}
-              {isLoadingGettingTasks ? (
+              {isLoadingMyTasks ? (
                 <Skeleton active />
               ) : (
                 <TaskUpdateTable
@@ -173,7 +145,7 @@ const TaskMePage = () => {
                   tasks={state.taskUpdates}
                   yScroll={295}
                   selectedTask={state.selectedTaskId}
-                  refetchData={refetchTasks}
+                  refetchData={refetchMyTasks}
                 />
               )}
             </div>
@@ -184,11 +156,11 @@ const TaskMePage = () => {
       {/* Task Table Card */}
       <Card title="Task Table">
         {/* Conditionally rendering task table */}
-        {isLoadingGettingTasks ? (
+        {isLoadingMyTasks ? (
           <Skeleton active />
         ) : (
           <TaskTable
-            tasks={filteredTasks}
+            tasks={MyTasks}
             setState={setState}
             pageSize={50}
             yScroll={350}

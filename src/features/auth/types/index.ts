@@ -4,6 +4,7 @@ export type AuthUser = {
   firstName: string;
   lastName: string;
   userName: string;
+  profileImage: string;
 };
 
 export type UserResponse = {

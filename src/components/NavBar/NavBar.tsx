@@ -42,7 +42,7 @@ function Navbar() {
         <SearchBar />
       </div>
       <div className="w-fit">
-        <img src={user.profileImage} alt="profile" className="w-8 h-8 rounded-lg" />
+        <img src={user?.profileImage} alt="profile" className="w-8 h-8 rounded-lg" />
       </div>
     </div>
   );

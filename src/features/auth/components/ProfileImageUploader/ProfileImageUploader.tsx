@@ -11,8 +11,10 @@ const ProfileImageUploader = () => {
         e.preventDefault();
         setError(null);
         setSuccessMessage(null);
-
-
+        if (!imageFile) {
+            setError('Please select an image file.');
+            return;
+        }
         try {
             const response = await uploadProfileImage({description, imageFile});
             setSuccessMessage('Image uploaded successfully!');

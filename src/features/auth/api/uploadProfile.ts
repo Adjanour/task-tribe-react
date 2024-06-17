@@ -4,7 +4,7 @@ import storage from "@/utils/storage";
 
 export interface uploadProfileImageTypes {
     description: string;
-    imageFile: any;
+    imageFile: File;
 }
 
 const Token = storage.getToken()

@@ -141,7 +141,8 @@ export const useTaskAPI = () => {
 
     const updateTaskStatus = async (newStatus:TaskStatusUpdate)=>{
             const response = await postTaskStatusUpdate(newStatus)
-        
+            console.log(response) 
+            console.log(response.status)
             if (response.status === 200) {
             return response.message;
             } else {

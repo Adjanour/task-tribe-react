@@ -38,7 +38,7 @@ export const usePostData = ({ endpoint, token }: UsePostDataProps) => {
     const postMutation = useMutation(
         async (postData: any) => {
             const response = await axios.post(endpoint, postData, defaultHeaders);
-            return response.data;
+            return response;
         },
         mutationOptions
     );
@@ -46,7 +46,7 @@ export const usePostData = ({ endpoint, token }: UsePostDataProps) => {
     const putMutation = useMutation(
         async (putData: any) => {
             const response = await axios.put(endpoint, putData, defaultHeaders);
-            return response.data;
+            return response;
         },
         mutationOptions
     );

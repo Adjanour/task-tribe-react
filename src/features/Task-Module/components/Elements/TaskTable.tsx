@@ -25,6 +25,7 @@ export type Task = {
     taskProgress: string;
     taskSlug: string | null;
     taskAssignmentId:number;
+    taskStatusId:number;
 }
 interface TaskTableProps {
     tasks: Task[];

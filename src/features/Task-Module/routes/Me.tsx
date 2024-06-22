@@ -18,7 +18,6 @@ import { fetchTaskUpdates } from "../utils/functions";
 // Defining TaskMePage component
 const TaskMePage = () => {
   // Using the useTaskAPI hook to fetch tasks and manage task-related data
-  const user:AuthUser = storage.getUser()
   const { MyTasks, refetchMyTasks,isLoadingMyTasks } = useTaskAPI();
   
 

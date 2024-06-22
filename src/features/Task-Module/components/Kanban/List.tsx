@@ -21,8 +21,8 @@ export const List: React.FC = () => {
 
   useEffect(() => {
     if (myTask.MyTasks) {
-      const notStarted = myTask.MyTasks.filter((task: Task) => task.taskStatusId === 2);
-      const inProgress = myTask.MyTasks.filter((task: Task) => task.taskStatusId === 3);
+      const notStarted = myTask.MyTasks.filter((task: Task) => task.taskStatusId === 1);
+      const inProgress = myTask.MyTasks.filter((task: Task) => task.taskStatusId === 2);
       const done = myTask.MyTasks.filter((task: Task) => task.taskStatusId === 6);
 
       setFilteredTasks({ notStarted, inProgress, done });

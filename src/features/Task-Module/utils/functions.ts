@@ -1,10 +1,7 @@
 import { axios } from '@/lib/axios';
 import { Priority, Status, TaskUpdate } from "@/features/Task-Module/types";
+import { TaskAssignment, UserValue } from '@/types';
 
-export interface UserValue {
-    label: string;
-    value: string;
-}
 
 /**
  * Handles errors from API requests.
@@ -62,7 +59,7 @@ export async function fetchTaskAssigner(param: string): Promise<UserValue|undefi
 export async function fetchTaskAssignees(param: string): Promise<UserValue[]|undefined> {
     try {
         const res = await axios.get(`/api/v1/task-assignments/${param}`);
-        return res.data.map(({ taskAssigneeName, taskAssigneeUserId }: Task) => ({
+        return res.data.map(({ taskAssigneeName, taskAssigneeUserId }: TaskAssignment) => ({
             label: taskAssigneeName,
             value: taskAssigneeUserId,
         }));
@@ -100,52 +97,7 @@ export async function fetchTaskUpdates(param: string): Promise<TaskUpdate[] | an
     }
 }
 
-export type Task = {
-    taskId: number;
-    taskName: string;
-    taskDescription: string;
-    taskPriority: string;
-    taskPriorityId: number;
-    taskStatus: string;
-    taskStatusId: number;
-    tkaAssignerId: number;
-    taskStartDate: string;
-    taskCreatedDate: string;
-    taskEndDate: string;
-    assignerFullName: string;
-    tkaAssigneeId: number;
-    tkaAssignee_id: number;
-    tkaId: number;
-    tkaTaskId: number;
-    fullName: string;
-    taskDuration: number;
-    taskProgress: string;
-    taskAssigneeName: string;
-    taskAssigneeUserId: string;
-    taskAssignerName: string;
-    taskAssignerUserId: string;
-    taskSlug: string | null;
-}
 
-export interface TaskAssignment {
-    taskAssignmentId: number;
-    taskId: number;
-    taskStatusId: number;
-    taskPriorityId: number;
-    taskName: string;
-    taskDescription: string;
-    taskStartDate: string;
-    taskDueDate: string;
-    taskCreatedDate: string;
-    taskProgress: string;
-    taskAssignedDate: string;
-    taskPriority: string;
-    taskStatus: string;
-    taskAssignerUserId: number;
-    taskAssigneeUserId: number;
-    taskAssigneeName: string;
-    taskAssignerName: string;
-}
 
 export async function fetchTaskPriority(param: string): Promise<UserValue|undefined> {
     try {
@@ -160,7 +112,7 @@ export async function fetchTaskPriority(param: string): Promise<UserValue|undefi
 export async function fetchTasks(): Promise<UserValue[]|undefined> {
     try {
         const res = await axios.get('/api/v1/tasks');
-        return res.data.map(({ taskId, taskName }: Task) => ({
+        return res.data.map(({ taskId, taskName }: TaskAssignment) => ({
             label: `${taskName}`,
             value: taskId,
         }));

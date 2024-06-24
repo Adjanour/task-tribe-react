@@ -1,10 +1,11 @@
 import { HolidayComponent } from '@/components/HolidayComponent/Holiday'
-import {  fetchUsers, fetchTaskStatuses, fetchTaskPriorities, UserValue, fetchTaskAssignments } from '@/features/Task-Module/utils/functions'
+import {  fetchUsers, fetchTaskStatuses, fetchTaskPriorities, fetchTaskAssignments, fetchTasks } from '@/features/Task-Module/utils/functions'
 import { DatePicker,Form } from 'antd'
 import { SelectEdit } from '../../SelectEdit'
 import { TextAreaEdit } from '../../TextAreaEdit'
 import { Button } from '../../Button'
 import { processDateString } from '@/features/Task-Module/utils/format'
+import { UserValue } from '@/types'
 
 export type TaskAssignFormContentsProps = {
     handleClearForm: () => void;
@@ -90,7 +91,7 @@ export const  TaskAssignFormContents = ({handleClearForm,setState,state}:TaskAss
                     <SelectEdit mode="single" onChange={(value)=> { 
                         setState({...state , taskId: value})
         
-                    }} fetchOptions={fetchTaskAssignments} placeholder="Select a Task"/>
+                    }} fetchOptions={fetchTasks} placeholder="Select a Task"/>
                     </Form.Item>
                 </td>
             </tr>

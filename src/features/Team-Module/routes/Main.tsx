@@ -5,10 +5,11 @@ import {useTaskContext} from "@/features/Task-Module/stores/TaskContext";
 import {fetchTaskUpdates} from "@/features/Task-Module/utils/functions";
 import {TeamCreateForm} from "@/features/Team-Module/components/Elements/TeamForm";
 import TeamTable from "@/features/Team-Module/components/Elements/TeamTable";
-import { TaskAssignForm } from '../components/Elements/TeamForm/TaskAssignForm';
 import TaskUpdateTable from '../components/Elements/TaskUpdateTable';
 import { useGetData } from '@/hooks/useGetData';
 import {TeamDetails} from "@/features/Team-Module/components/TeamDetails";
+import storage from '@/utils/storage';
+import { TaskAssignForm } from '@/features/Task-Module/components/Elements/TaskForm/TaskAssignForm';
 
 const defaultTeamDetails = {
     teamDetailsId: 0,
@@ -38,8 +39,9 @@ const defaultTeamDetails = {
 
 const TeamCreatePage = () => {
     const task = useTaskContext();
-    const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/v1/teams/",token:""})
-    const teamDetails = useGetData({dataAlias:"teamDetails",endpoint:"http://localhost:8000/api/v1/team-details/",token:""})
+    const Token = storage.getToken();
+    const team = useGetData({dataAlias:"team",endpoint:"http://localhost:8000/api/v1/teams/",token:Token})
+    const teamDetails = useGetData({dataAlias:"teamDetails",endpoint:"http://localhost:8000/api/v1/team-details/",token:Token})
     const [state,setState] = useState({
         selectedTeamId: "1",
         statusData: { label: "", value: "" },
@@ -53,16 +55,6 @@ const TeamCreatePage = () => {
     })
 
     useEffect(() => {
-        // const fetchData = async () => {
-        //     try {
-        //       const taskUpdates = await fetchTaskUpdates(state.selectedTeamId);
-        //       setState({ ...state, taskUpdates: taskUpdates });
-        //     } catch (error) {
-        //       console.error("Error fetching task updates:", error);
-        //     }
-        //   };
-        //
-        //   fetchData();
         const teamDetailsFiltered = teamDetails.data?.filter((teamDetails: any) => teamDetails.teamDetailsTeamId?.teamId == state.selectedTeamId);
         console.log(teamDetails.data)
         setState({ ...state, teamDetails: teamDetailsFiltered });

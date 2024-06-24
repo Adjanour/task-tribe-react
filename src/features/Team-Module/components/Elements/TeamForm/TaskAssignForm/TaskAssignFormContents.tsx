@@ -1,10 +1,11 @@
 import { HolidayComponent } from '@/components/HolidayComponent/Holiday'
-import { fetchTasks, fetchUsers, fetchTaskStatuses, fetchTaskPriorities, UserValue } from '@/features/Task-Module/utils/functions'
+import { fetchTasks, fetchUsers, fetchTaskStatuses, fetchTaskPriorities } from '@/features/Task-Module/utils/functions'
 import { DatePicker,Form } from 'antd'
 import { SelectEdit } from '../../SelectEdit'
 import { TextAreaEdit } from '../../TextAreaEdit'
 import { Button } from '../../Button'
 import { processDateString } from '@/features/Task-Module/utils/format'
+import { UserValue } from '@/types'
 
 export type TaskAssignFormContentsProps = {
     handleClearForm: () => void;

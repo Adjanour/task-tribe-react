@@ -1,8 +1,9 @@
 import  { useEffect, useState } from "react";
 import { Form, message } from "antd";
 import { useTaskAPI } from "@/features/Task-Module/hooks/useTaskAPI";
-import {UserValue, fetchTaskStatus, fetchTaskAssignment} from "@/features/Task-Module/utils/functions";
+import {fetchTaskStatus, fetchTaskAssignment} from "@/features/Task-Module/utils/functions";
 import TaskProgressUpdateFormContent from "./TaskUpdateFormContent";
+import { UserValue } from "@/types";
 
 interface TaskProgressUpdateFormProps {
   taskId: string;

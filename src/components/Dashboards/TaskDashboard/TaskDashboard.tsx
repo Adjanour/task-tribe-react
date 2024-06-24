@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { DatePicker, Select } from 'antd';
 import { LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { TaskAssignment } from '@/features/Task-Module/utils/functions';
 import { Dayjs } from 'dayjs';
+import { TaskAssignment } from '@/types';
 
 interface TaskDashboardProps {
   tasks: TaskAssignment[];

@@ -125,3 +125,101 @@ export type TaskStatusUpdate = {
     taskId : number;
     taskStatusId?:number;
 }
+
+export type ChatMessage = {
+    id: number;
+    senderId: number;
+    receiverId: number;
+    message: string;
+    timestamp: string;
+  }
+  
+  export type TaskComment = {
+    id: number;
+    taskId: number;
+    userId: number;
+    comment: string;
+    timestamp: string;
+  }
+  
+  export type ProjectComment = {
+    id: number;
+    projectId: number;
+    userId: number;
+    comment: string;
+    timestamp: string;
+  }
+  
+  export type ActivityLog = {
+    id: number;
+    userId: number;
+    action: string;
+    targetId: number;
+    targetType: 'task' | 'project';
+    timestamp: string;
+  }
+  
+  export type File = {
+    id: number;
+    name: string;
+    url: string;
+    uploadedBy: number;
+    taskId?: number;
+    projectId?: number;
+    timestamp: string;
+  }
+  
+  export type Notification = {
+    id: number;
+    userId: number;
+    message: string;
+    timestamp: string;
+    isRead: boolean;
+  }
+  
+  export interface ChatAPI {
+    getChatMessages(teamId: number): Promise<ChatMessage[]>;
+    sendChatMessage(chatMessage: { teamId: number, message: string }): Promise<void>;
+  }
+  
+  export interface CommentAPI {
+    getComments(taskId?: number, projectId?: number): Promise<(TaskComment | ProjectComment)[]>;
+    addComment(commentData: { taskId?: number, projectId?: number, comment: string }): Promise<void>;
+  }
+  
+  export interface ActivityAPI {
+    getActivityFeed(userId: number): Promise<ActivityLog[]>;
+  }
+
+  export interface NotificationAPI {
+    getNotifications(userId: number): Promise<Notification[]>;
+    markAsRead(notificationId: number): Promise<void>;
+  }
+  
+  export interface FileAPI {
+    uploadFile(fileData: { taskId?: number, projectId?: number, file: File }): Promise<void>;
+    getFiles(taskId?: number, projectId?: number): Promise<File[]>;
+  }
+  
+  export interface ChatProps {
+    teamId: number;
+  }
+  
+  export interface CommentsProps {
+    taskId?: number;
+    projectId?: number;
+  }
+  
+  export interface ActivityFeedProps {
+    userId: number;
+  }
+  
+  export interface NotificationsProps {
+    userId: number;
+  }
+  
+  export interface FileUploadProps {
+    taskId?: number;
+    projectId?: number;
+  }
+  
